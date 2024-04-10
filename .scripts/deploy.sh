@@ -35,5 +35,5 @@ echo "Virtual env 'env' Deactivated !"
 echo "Reloading App..."
 #kill -HUP ps -C gunicorn fch -o pid | head -n 1
 ps aux |grep gunicorn |grep homofix_Proj | awk '{ print $2 }' |xargs kill -HUP
-
+ 
 echo "Deployment Finished !"
