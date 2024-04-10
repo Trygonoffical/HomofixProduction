@@ -22,5 +22,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd ~/CRMProduction && ./.scripts/deploy.sh"
+          script: "cd ~/HomofixProduction && ./.scripts/deploy.sh"
           
