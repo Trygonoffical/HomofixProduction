@@ -9,6 +9,7 @@ from django.views.static import serve
 from django.urls import re_path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+
 router = DefaultRouter()
 router.register('Expert', API_Views.ExpertViewSet,basename="Expert")
 router.register('Task', API_Views.TaskViewSet,basename="Task")
