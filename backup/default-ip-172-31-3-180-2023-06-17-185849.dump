@@ -1,0 +1,1585 @@
+-- MySQL dump 10.13  Distrib 8.0.33, for Linux (x86_64)
+--
+-- Host: localhost    Database: homofix
+-- ------------------------------------------------------
+-- Server version	8.0.33-0ubuntu0.22.04.2
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add content type',4,'add_contenttype'),(14,'Can change content type',4,'change_contenttype'),(15,'Can delete content type',4,'delete_contenttype'),(16,'Can view content type',4,'view_contenttype'),(17,'Can add session',5,'add_session'),(18,'Can change session',5,'change_session'),(19,'Can delete session',5,'delete_session'),(20,'Can view session',5,'view_session'),(21,'Can add user',6,'add_customuser'),(22,'Can change user',6,'change_customuser'),(23,'Can delete user',6,'delete_customuser'),(24,'Can view user',6,'view_customuser'),(25,'Can add booking',7,'add_booking'),(26,'Can change booking',7,'change_booking'),(27,'Can delete booking',7,'delete_booking'),(28,'Can view booking',7,'view_booking'),(29,'Can add booking product',8,'add_bookingproduct'),(30,'Can change booking product',8,'change_bookingproduct'),(31,'Can delete booking product',8,'delete_bookingproduct'),(32,'Can view booking product',8,'view_bookingproduct'),(33,'Can add category',9,'add_category'),(34,'Can change category',9,'change_category'),(35,'Can delete category',9,'delete_category'),(36,'Can view category',9,'view_category'),(37,'Can add contact us',10,'add_contactus'),(38,'Can change contact us',10,'change_contactus'),(39,'Can delete contact us',10,'delete_contactus'),(40,'Can view contact us',10,'view_contactus'),(41,'Can add customer',11,'add_customer'),(42,'Can change customer',11,'change_customer'),(43,'Can delete customer',11,'delete_customer'),(44,'Can view customer',11,'view_customer'),(45,'Can add hod share percentage',12,'add_hodsharepercentage'),(46,'Can change hod share percentage',12,'change_hodsharepercentage'),(47,'Can delete hod share percentage',12,'delete_hodsharepercentage'),(48,'Can view hod share percentage',12,'view_hodsharepercentage'),(49,'Can add job enquiry',13,'add_jobenquiry'),(50,'Can change job enquiry',13,'change_jobenquiry'),(51,'Can delete job enquiry',13,'delete_jobenquiry'),(52,'Can view job enquiry',13,'view_jobenquiry'),(53,'Can add product',14,'add_product'),(54,'Can change product',14,'change_product'),(55,'Can delete product',14,'delete_product'),(56,'Can view product',14,'view_product'),(57,'Can add sub category',15,'add_subcategory'),(58,'Can change sub category',15,'change_subcategory'),(59,'Can delete sub category',15,'delete_subcategory'),(60,'Can view sub category',15,'view_subcategory'),(61,'Can add support',16,'add_support'),(62,'Can change support',16,'change_support'),(63,'Can delete support',16,'delete_support'),(64,'Can view support',16,'view_support'),(65,'Can add technician',17,'add_technician'),(66,'Can change technician',17,'change_technician'),(67,'Can delete technician',17,'delete_technician'),(68,'Can view technician',17,'view_technician'),(69,'Can add wallet',18,'add_wallet'),(70,'Can change wallet',18,'change_wallet'),(71,'Can delete wallet',18,'delete_wallet'),(72,'Can view wallet',18,'view_wallet'),(73,'Can add wallet history',19,'add_wallethistory'),(74,'Can change wallet history',19,'change_wallethistory'),(75,'Can delete wallet history',19,'delete_wallethistory'),(76,'Can view wallet history',19,'view_wallethistory'),(77,'Can add technician location',20,'add_technicianlocation'),(78,'Can change technician location',20,'change_technicianlocation'),(79,'Can delete technician location',20,'delete_technicianlocation'),(80,'Can view technician location',20,'view_technicianlocation'),(81,'Can add task',21,'add_task'),(82,'Can change task',21,'change_task'),(83,'Can delete task',21,'delete_task'),(84,'Can view task',21,'view_task'),(85,'Can add spare parts',22,'add_spareparts'),(86,'Can change spare parts',22,'change_spareparts'),(87,'Can delete spare parts',22,'delete_spareparts'),(88,'Can view spare parts',22,'view_spareparts'),(89,'Can add showonline',23,'add_showonline'),(90,'Can change showonline',23,'change_showonline'),(91,'Can delete showonline',23,'delete_showonline'),(92,'Can view showonline',23,'view_showonline'),(93,'Can add share',24,'add_share'),(94,'Can change share',24,'change_share'),(95,'Can delete share',24,'delete_share'),(96,'Can view share',24,'view_share'),(97,'Can add recharge history',25,'add_rechargehistory'),(98,'Can change recharge history',25,'change_rechargehistory'),(99,'Can delete recharge history',25,'delete_rechargehistory'),(100,'Can view recharge history',25,'view_rechargehistory'),(101,'Can add rebooking',26,'add_rebooking'),(102,'Can change rebooking',26,'change_rebooking'),(103,'Can delete rebooking',26,'delete_rebooking'),(104,'Can view rebooking',26,'view_rebooking'),(105,'Can add payment',27,'add_payment'),(106,'Can change payment',27,'change_payment'),(107,'Can delete payment',27,'delete_payment'),(108,'Can view payment',27,'view_payment'),(109,'Can add kyc',28,'add_kyc'),(110,'Can change kyc',28,'change_kyc'),(111,'Can delete kyc',28,'delete_kyc'),(112,'Can view kyc',28,'view_kyc'),(113,'Can add feedback',29,'add_feedback'),(114,'Can change feedback',29,'change_feedback'),(115,'Can delete feedback',29,'delete_feedback'),(116,'Can view feedback',29,'view_feedback'),(117,'Can add faq',30,'add_faq'),(118,'Can change faq',30,'change_faq'),(119,'Can delete faq',30,'delete_faq'),(120,'Can view faq',30,'view_faq'),(121,'Can add admin hod',31,'add_adminhod'),(122,'Can change admin hod',31,'change_adminhod'),(123,'Can delete admin hod',31,'delete_adminhod'),(124,'Can view admin hod',31,'view_adminhod'),(125,'Can add addon',32,'add_addon'),(126,'Can change addon',32,'change_addon'),(127,'Can delete addon',32,'delete_addon'),(128,'Can view addon',32,'view_addon'),(129,'Can add withdraw request',33,'add_withdrawrequest'),(130,'Can change withdraw request',33,'change_withdrawrequest'),(131,'Can delete withdraw request',33,'delete_withdrawrequest'),(132,'Can view withdraw request',33,'view_withdrawrequest'),(133,'Can add all technician location',34,'add_alltechnicianlocation'),(134,'Can change all technician location',34,'change_alltechnicianlocation'),(135,'Can delete all technician location',34,'delete_alltechnicianlocation'),(136,'Can view all technician location',34,'view_alltechnicianlocation'),(137,'Can add attendance',35,'add_attendance'),(138,'Can change attendance',35,'change_attendance'),(139,'Can delete attendance',35,'delete_attendance'),(140,'Can view attendance',35,'view_attendance'),(141,'Can add coupon',36,'add_coupon'),(142,'Can change coupon',36,'change_coupon'),(143,'Can delete coupon',36,'delete_coupon'),(144,'Can view coupon',36,'view_coupon'),(145,'Can add blog',37,'add_blog'),(146,'Can change blog',37,'change_blog'),(147,'Can delete blog',37,'delete_blog'),(148,'Can view blog',37,'view_blog'),(149,'Can add offer',38,'add_offer'),(150,'Can change offer',38,'change_offer'),(151,'Can delete offer',38,'delete_offer'),(152,'Can view offer',38,'view_offer'),(153,'Can add most viewed',39,'add_mostviewed'),(154,'Can change most viewed',39,'change_mostviewed'),(155,'Can delete most viewed',39,'delete_mostviewed'),(156,'Can view most viewed',39,'view_mostviewed'),(157,'Can add home page service',40,'add_homepageservice'),(158,'Can change home page service',40,'change_homepageservice'),(159,'Can delete home page service',40,'delete_homepageservice'),(160,'Can view home page service',40,'view_homepageservice'),(161,'Can add carrer',41,'add_carrer'),(162,'Can change carrer',41,'change_carrer'),(163,'Can delete carrer',41,'delete_carrer'),(164,'Can view carrer',41,'view_carrer'),(165,'Can add applicant carrer',42,'add_applicantcarrer'),(166,'Can change applicant carrer',42,'change_applicantcarrer'),(167,'Can delete applicant carrer',42,'delete_applicantcarrer'),(168,'Can view applicant carrer',42,'view_applicantcarrer'),(169,'Can add legal page',43,'add_legalpage'),(170,'Can change legal page',43,'change_legalpage'),(171,'Can delete legal page',43,'delete_legalpage'),(172,'Can view legal page',43,'view_legalpage'),(173,'Can add invoice',44,'add_invoice'),(174,'Can change invoice',44,'change_invoice'),(175,'Can delete invoice',44,'delete_invoice'),(176,'Can view invoice',44,'view_invoice'),(177,'Can add settlement',45,'add_settlement'),(178,'Can change settlement',45,'change_settlement'),(179,'Can delete settlement',45,'delete_settlement'),(180,'Can view settlement',45,'view_settlement'),(181,'Can add django job',46,'add_djangojob'),(182,'Can change django job',46,'change_djangojob'),(183,'Can delete django job',46,'delete_djangojob'),(184,'Can view django job',46,'view_djangojob'),(185,'Can add django job execution',47,'add_djangojobexecution'),(186,'Can change django job execution',47,'change_djangojobexecution'),(187,'Can delete django job execution',47,'delete_djangojobexecution'),(188,'Can view django job execution',47,'view_djangojobexecution');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_admin_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int DEFAULT NULL,
+  `user_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_homofix_app_customuser_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_homofix_app_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `homofix_app_customuser` (`id`),
+  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_apscheduler_djangojob`
+--
+
+DROP TABLE IF EXISTS `django_apscheduler_djangojob`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_apscheduler_djangojob` (
+  `id` varchar(255) NOT NULL,
+  `next_run_time` datetime(6) DEFAULT NULL,
+  `job_state` longblob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_apscheduler_djangojob_next_run_time_2f022619` (`next_run_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_apscheduler_djangojob`
+--
+
+LOCK TABLES `django_apscheduler_djangojob` WRITE;
+/*!40000 ALTER TABLE `django_apscheduler_djangojob` DISABLE KEYS */;
+INSERT INTO `django_apscheduler_djangojob` VALUES ('weekly_backup','2023-06-17 13:29:48.155200',_binary 'Äï=\0\0\0\0\0\0}î(åversionîKåidîå\rweekly_backupîåfuncîå)homofix_app.scheduler.scheduler:db_backupîåtriggerîåapscheduler.triggers.intervalîåIntervalTriggerîìî)Åî}î(hKåtimezoneîåpytz_deprecation_shim._implîå	wrap_zoneîìîåbuiltinsîågetattrîìîåzoneinfoîåZoneInfoîìîå	_unpickleîÜîRîå\rAsia/CalcuttaîKÜîRîhÜîRîå\nstart_dateîådatetimeîådatetimeîìîC\n\Á;0^@îhÜîRîåend_dateîNåintervalîhå	timedeltaîìîK\0K<K\0áîRîåjitterîNubåexecutorîådefaultîåargsî)åkwargsî}îånameîå	db_backupîåmisfire_grace_timeîKåcoalesceîàå\rmax_instancesîKå\rnext_run_timeîh!C\n\Á;0^@îhÜîRîu.');
+/*!40000 ALTER TABLE `django_apscheduler_djangojob` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_apscheduler_djangojobexecution`
+--
+
+DROP TABLE IF EXISTS `django_apscheduler_djangojobexecution`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_apscheduler_djangojobexecution` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `status` varchar(50) NOT NULL,
+  `run_time` datetime(6) NOT NULL,
+  `duration` decimal(15,2) DEFAULT NULL,
+  `finished` decimal(15,2) DEFAULT NULL,
+  `exception` varchar(1000) DEFAULT NULL,
+  `traceback` longtext,
+  `job_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_job_executions` (`job_id`,`run_time`),
+  KEY `django_apscheduler_djangojobexecution_run_time_16edd96b` (`run_time`),
+  CONSTRAINT `django_apscheduler_djangojobexecution_job_id_daf5090a_fk` FOREIGN KEY (`job_id`) REFERENCES `django_apscheduler_djangojob` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_apscheduler_djangojobexecution`
+--
+
+LOCK TABLES `django_apscheduler_djangojobexecution` WRITE;
+/*!40000 ALTER TABLE `django_apscheduler_djangojobexecution` DISABLE KEYS */;
+INSERT INTO `django_apscheduler_djangojobexecution` VALUES (2,'Executed','2023-06-17 12:59:48.967081',1.16,1687006790.13,NULL,NULL,'weekly_backup'),(3,'Executed','2023-06-17 13:01:28.597153',1.03,1687006889.63,NULL,NULL,'weekly_backup'),(6,'Executed','2023-06-17 13:02:42.514727',1.02,1687006963.53,NULL,NULL,'weekly_backup'),(9,'Executed','2023-06-17 13:03:42.514727',1.05,1687007023.57,NULL,NULL,'weekly_backup'),(12,'Executed','2023-06-17 13:04:42.514727',0.95,1687007083.47,NULL,NULL,'weekly_backup'),(15,'Missed!','2023-06-17 13:05:42.514727',118.19,1687007260.70,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(17,'Missed!','2023-06-17 13:13:04.851941',8.48,1687007593.33,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(18,'Missed!','2023-06-17 13:14:04.851941',155.15,1687007800.01,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup');
+/*!40000 ALTER TABLE `django_apscheduler_djangojobexecution` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_content_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'contenttypes','contenttype'),(46,'django_apscheduler','djangojob'),(47,'django_apscheduler','djangojobexecution'),(32,'homofix_app','addon'),(31,'homofix_app','adminhod'),(34,'homofix_app','alltechnicianlocation'),(42,'homofix_app','applicantcarrer'),(35,'homofix_app','attendance'),(37,'homofix_app','blog'),(7,'homofix_app','booking'),(8,'homofix_app','bookingproduct'),(41,'homofix_app','carrer'),(9,'homofix_app','category'),(10,'homofix_app','contactus'),(36,'homofix_app','coupon'),(11,'homofix_app','customer'),(6,'homofix_app','customuser'),(30,'homofix_app','faq'),(29,'homofix_app','feedback'),(12,'homofix_app','hodsharepercentage'),(40,'homofix_app','homepageservice'),(44,'homofix_app','invoice'),(13,'homofix_app','jobenquiry'),(28,'homofix_app','kyc'),(43,'homofix_app','legalpage'),(39,'homofix_app','mostviewed'),(38,'homofix_app','offer'),(27,'homofix_app','payment'),(14,'homofix_app','product'),(26,'homofix_app','rebooking'),(25,'homofix_app','rechargehistory'),(45,'homofix_app','settlement'),(24,'homofix_app','share'),(23,'homofix_app','showonline'),(22,'homofix_app','spareparts'),(15,'homofix_app','subcategory'),(16,'homofix_app','support'),(21,'homofix_app','task'),(17,'homofix_app','technician'),(20,'homofix_app','technicianlocation'),(18,'homofix_app','wallet'),(19,'homofix_app','wallethistory'),(33,'homofix_app','withdrawrequest'),(5,'sessions','session');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_migrations` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2023-06-17 08:30:52.096241'),(2,'contenttypes','0002_remove_content_type_name','2023-06-17 08:30:52.178106'),(3,'auth','0001_initial','2023-06-17 08:30:52.567112'),(4,'auth','0002_alter_permission_name_max_length','2023-06-17 08:30:52.665604'),(5,'auth','0003_alter_user_email_max_length','2023-06-17 08:30:52.678707'),(6,'auth','0004_alter_user_username_opts','2023-06-17 08:30:52.690176'),(7,'auth','0005_alter_user_last_login_null','2023-06-17 08:30:52.701593'),(8,'auth','0006_require_contenttypes_0002','2023-06-17 08:30:52.710838'),(9,'auth','0007_alter_validators_add_error_messages','2023-06-17 08:30:52.722658'),(10,'auth','0008_alter_user_username_max_length','2023-06-17 08:30:52.748653'),(11,'auth','0009_alter_user_last_name_max_length','2023-06-17 08:30:52.758776'),(12,'auth','0010_alter_group_name_max_length','2023-06-17 08:30:52.783403'),(13,'auth','0011_update_proxy_permissions','2023-06-17 08:30:52.793781'),(14,'auth','0012_alter_user_first_name_max_length','2023-06-17 08:30:52.804377'),(15,'homofix_app','0001_initial','2023-06-17 08:30:57.337121'),(16,'admin','0001_initial','2023-06-17 08:30:57.550963'),(17,'admin','0002_logentry_remove_auto_add','2023-06-17 08:30:57.571662'),(18,'admin','0003_logentry_add_action_flag_choices','2023-06-17 08:30:57.591918'),(19,'homofix_app','0002_rename_technician_wallet_technician_id','2023-06-17 08:30:57.791934'),(20,'homofix_app','0003_rename_technician_id_wallet_technician','2023-06-17 08:30:57.937576'),(21,'homofix_app','0004_rename_technician_wallet_technician_id','2023-06-17 08:30:58.078105'),(22,'homofix_app','0005_rechargehistory_payment_id','2023-06-17 08:30:58.124352'),(23,'homofix_app','0006_rechargehistory_status','2023-06-17 08:30:58.167798'),(24,'homofix_app','0007_withdrawrequest','2023-06-17 08:30:58.292651'),(25,'homofix_app','0008_product_selling_price','2023-06-17 08:30:58.345981'),(26,'homofix_app','0009_withdrawrequest_status','2023-06-17 08:30:58.403076'),(27,'homofix_app','0010_booking_cash_on_service_booking_online_and_more','2023-06-17 08:30:58.616323'),(28,'homofix_app','0011_alltechnicianlocation','2023-06-17 08:30:58.744140'),(29,'homofix_app','0012_kyc_bank_active','2023-06-17 08:30:58.799417'),(30,'homofix_app','0013_kyc_bank_name','2023-06-17 08:30:58.846693'),(31,'homofix_app','0014_booking_admin_by','2023-06-17 08:30:59.061533'),(32,'homofix_app','0015_alter_withdrawrequest_status','2023-06-17 08:30:59.083229'),(33,'homofix_app','0016_attendance','2023-06-17 08:30:59.217368'),(34,'homofix_app','0017_rename_user_attendance_support_id','2023-06-17 08:30:59.345626'),(35,'homofix_app','0018_coupon_booking_coupon','2023-06-17 08:30:59.512684'),(36,'homofix_app','0019_blog','2023-06-17 08:30:59.549535'),(37,'homofix_app','0020_rename_customer_feedback_customer_id_and_more','2023-06-17 08:31:00.139347'),(38,'homofix_app','0021_alter_share_hod_share','2023-06-17 08:31:00.227333'),(39,'homofix_app','0022_alter_bookingproduct_quantity','2023-06-17 08:31:00.267417'),(40,'homofix_app','0023_alter_product_quantity','2023-06-17 08:31:00.303842'),(41,'homofix_app','0024_alter_product_quantity','2023-06-17 08:31:00.342803'),(42,'homofix_app','0025_alter_wallet_total_share','2023-06-17 08:31:00.430581'),(43,'homofix_app','0026_alter_wallethistory_amount','2023-06-17 08:31:00.509047'),(44,'homofix_app','0027_offer','2023-06-17 08:31:00.544235'),(45,'homofix_app','0028_alter_wallethistory_type','2023-06-17 08:31:00.557357'),(46,'homofix_app','0029_alter_wallethistory_type','2023-06-17 08:31:00.569409'),(47,'homofix_app','0030_mostviewed','2023-06-17 08:31:00.696147'),(48,'homofix_app','0031_alter_mostviewed_img','2023-06-17 08:31:00.762006'),(49,'homofix_app','0032_rename_proudct_mostviewed_product_id','2023-06-17 08:31:00.895976'),(50,'homofix_app','0033_rename_product_id_mostviewed_proudct','2023-06-17 08:31:01.044774'),(51,'homofix_app','0034_rename_proudct_mostviewed_product_id','2023-06-17 08:31:01.181318'),(52,'homofix_app','0035_category_icon','2023-06-17 08:31:01.229654'),(53,'homofix_app','0036_subcategory_subcategory_image','2023-06-17 08:31:01.274973'),(54,'homofix_app','0037_remove_feedback_feedback_feedback_description','2023-06-17 08:31:01.375542'),(55,'homofix_app','0038_alter_feedback_rating','2023-06-17 08:31:01.507884'),(56,'homofix_app','0039_alter_feedback_rating','2023-06-17 08:31:01.532493'),(57,'homofix_app','0040_alter_feedback_description_alter_feedback_rating','2023-06-17 08:31:01.650877'),(58,'homofix_app','0041_alter_offer_url','2023-06-17 08:31:01.713737'),(59,'homofix_app','0042_homepageserive','2023-06-17 08:31:01.912869'),(60,'homofix_app','0043_homepageservice_delete_homepageserive','2023-06-17 08:31:02.077104'),(61,'homofix_app','0044_carrer','2023-06-17 08:31:02.111173'),(62,'homofix_app','0045_alter_carrer_status_applicantcarrer','2023-06-17 08:31:02.219634'),(63,'homofix_app','0046_alter_carrer_description','2023-06-17 08:31:02.228685'),(64,'homofix_app','0047_alter_bookingproduct_booking','2023-06-17 08:31:02.266079'),(65,'homofix_app','0048_alter_bookingproduct_booking','2023-06-17 08:31:02.303438'),(66,'homofix_app','0049_alter_bookingproduct_booking','2023-06-17 08:31:02.340238'),(67,'homofix_app','0050_alter_bookingproduct_booking','2023-06-17 08:31:02.378504'),(68,'homofix_app','0051_alter_bookingproduct_booking','2023-06-17 08:31:02.415873'),(69,'homofix_app','0052_alter_booking_products','2023-06-17 08:31:02.454046'),(70,'homofix_app','0053_jobenquiry_expert_in','2023-06-17 08:31:02.496592'),(71,'homofix_app','0054_jobenquiry_full_address','2023-06-17 08:31:02.554363'),(72,'homofix_app','0055_legalpage','2023-06-17 08:31:02.591590'),(73,'homofix_app','0056_alter_applicantcarrer_email','2023-06-17 08:31:02.645499'),(74,'homofix_app','0057_alter_applicantcarrer_email_alter_jobenquiry_email','2023-06-17 08:31:02.772318'),(75,'homofix_app','0058_invoice','2023-06-17 08:31:02.902300'),(76,'homofix_app','0059_alter_invoice_invoice_no','2023-06-17 08:31:02.922534'),(77,'homofix_app','0060_remove_invoice_invoice_name','2023-06-17 08:31:02.963293'),(78,'homofix_app','0061_alter_hodsharepercentage_percentage','2023-06-17 08:31:03.027738'),(79,'homofix_app','0062_payment_amount','2023-06-17 08:31:03.080770'),(80,'homofix_app','0063_alter_payment_amount','2023-06-17 08:31:03.146453'),(81,'homofix_app','0064_alter_payment_amount','2023-06-17 08:31:03.240616'),(82,'homofix_app','0065_alter_payment_amount','2023-06-17 08:31:03.259497'),(83,'homofix_app','0066_alter_payment_amount','2023-06-17 08:31:03.326183'),(84,'homofix_app','0067_share_cmp_share','2023-06-17 08:31:03.374903'),(85,'homofix_app','0068_booking_new_payment_booking_pay','2023-06-17 08:31:03.551935'),(86,'homofix_app','0069_remove_booking_pay','2023-06-17 08:31:03.616906'),(87,'homofix_app','0070_booking_pay','2023-06-17 08:31:03.712561'),(88,'homofix_app','0071_remove_booking_pay_payment_payment_id','2023-06-17 08:31:03.828982'),(89,'homofix_app','0072_alter_payment_amount','2023-06-17 08:31:03.917697'),(90,'homofix_app','0073_remove_share_hod_share','2023-06-17 08:31:03.957169'),(91,'homofix_app','0074_share_hod_share','2023-06-17 08:31:04.008665'),(92,'homofix_app','0075_rename_cmp_share_share_company_share_and_more','2023-06-17 08:31:04.078674'),(93,'homofix_app','0076_rename_company_share_share_hod_share','2023-06-17 08:31:04.120302'),(94,'homofix_app','0077_share_cmp_share','2023-06-17 08:31:04.254469'),(95,'homofix_app','0078_rename_cmp_share_share_company_share_and_more','2023-06-17 08:31:04.324121'),(96,'homofix_app','0079_settlement','2023-06-17 08:31:04.357975'),(97,'homofix_app','0080_settlement_technician_id','2023-06-17 08:31:04.482326'),(98,'homofix_app','0081_alter_booking_cash_on_service_alter_booking_online','2023-06-17 08:31:04.561556'),(99,'sessions','0001_initial','2023-06-17 08:31:04.624054'),(100,'django_apscheduler','0001_initial','2023-06-17 12:57:21.101362'),(101,'django_apscheduler','0002_auto_20180412_0758','2023-06-17 12:57:21.157084'),(102,'django_apscheduler','0003_auto_20200716_1632','2023-06-17 12:57:21.196849'),(103,'django_apscheduler','0004_auto_20200717_1043','2023-06-17 12:57:21.435011'),(104,'django_apscheduler','0005_migrate_name_to_id','2023-06-17 12:57:21.487430'),(105,'django_apscheduler','0006_remove_djangojob_name','2023-06-17 12:57:21.539808'),(106,'django_apscheduler','0007_auto_20200717_1404','2023-06-17 12:57:21.608017'),(107,'django_apscheduler','0008_remove_djangojobexecution_started','2023-06-17 12:57:21.640548'),(108,'django_apscheduler','0009_djangojobexecution_unique_job_executions','2023-06-17 12:57:21.668358');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('557nc5rfxcf3k019qzdeq0qlfa8cts69','.eJxVjEEOwiAQRe_C2hAGioBL956BMMMgVUOT0q6Md7dNutDte-__t4hpXWpcO89xzOIiQJx-GSZ6cttFfqR2nyRNbZlHlHsiD9vlbcr8uh7t30FNvW5rPjtWYJkM68DWa1YUBiaPZBzShhNAsiqQQuXRFQMBM4IeAhUwRXy--bY4gw:1qAU86:GOj-8g-SloDqmqonMf2gupbt9iRrBbpnXMixhe3NleY','2023-07-01 11:30:06.355157'),('byqihv654dab6qpc5g4ji7ct3peb4fuq','.eJxVjEEOwiAQRe_C2hAGioBL956BMMMgVUOT0q6Md7dNutDte-__t4hpXWpcO89xzOIiQJx-GSZ6cttFfqR2nyRNbZlHlHsiD9vlbcr8uh7t30FNvW5rPjtWYJkM68DWa1YUBiaPZBzShhNAsiqQQuXRFQMBM4IeAhUwRXy--bY4gw:1qASVB:WjwHXOZoVmnTDYJab7o1P-VcUaBd9qmpePLilpWjKY0','2023-07-01 09:45:49.749913'),('c9y92pr906gnk7ypxjjz3q3lvz5apx26','.eJxVjEEOwiAQRe_C2hAGioBL956BMMMgVUOT0q6Md7dNutDte-__t4hpXWpcO89xzOIiQJx-GSZ6cttFfqR2nyRNbZlHlHsiD9vlbcr8uh7t30FNvW5rPjtWYJkM68DWa1YUBiaPZBzShhNAsiqQQuXRFQMBM4IeAhUwRXy--bY4gw:1qAUJo:VSLteFvGrGmz1j2BpQGNBBZVmZKUO7q9bhWXyG5st2M','2023-07-01 11:42:12.469689'),('ncjg9in8mwoaxer06dtimc93ppwbd179','.eJxVjEEOwiAQRe_C2hAGioBL956BMMMgVUOT0q6Md7dNutDte-__t4hpXWpcO89xzOIiQJx-GSZ6cttFfqR2nyRNbZlHlHsiD9vlbcr8uh7t30FNvW5rPjtWYJkM68DWa1YUBiaPZBzShhNAsiqQQuXRFQMBM4IeAhUwRXy--bY4gw:1qAUFI:f8qrO6SUnGGsm8Nwq6JCaigzgZbx12hfBfvM-hZX070','2023-07-01 11:37:32.868324'),('xg1k2g8ojwdsx2vuprg9nzaa7jdovri1','.eJxVjEEOwiAQRe_C2hAGioBL956BMMMgVUOT0q6Md7dNutDte-__t4hpXWpcO89xzOIiQJx-GSZ6cttFfqR2nyRNbZlHlHsiD9vlbcr8uh7t30FNvW5rPjtWYJkM68DWa1YUBiaPZBzShhNAsiqQQuXRFQMBM4IeAhUwRXy--bY4gw:1qATVG:UUP7Zg9yNqJHnFQzBuHwzWd78SWcbTOsmqqeoI_u1IA','2023-07-01 10:49:58.159926');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_addon`
+--
+
+DROP TABLE IF EXISTS `homofix_app_addon`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_addon` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `quantity` int NOT NULL,
+  `date` date NOT NULL,
+  `description` longtext,
+  `booking_prod_id_id` bigint NOT NULL,
+  `spare_parts_id_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_addon_booking_prod_id_id_7de46505_fk_homofix_a` (`booking_prod_id_id`),
+  KEY `homofix_app_addon_spare_parts_id_id_d7e612cd_fk_homofix_a` (`spare_parts_id_id`),
+  CONSTRAINT `homofix_app_addon_booking_prod_id_id_7de46505_fk_homofix_a` FOREIGN KEY (`booking_prod_id_id`) REFERENCES `homofix_app_bookingproduct` (`id`),
+  CONSTRAINT `homofix_app_addon_spare_parts_id_id_d7e612cd_fk_homofix_a` FOREIGN KEY (`spare_parts_id_id`) REFERENCES `homofix_app_spareparts` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_addon`
+--
+
+LOCK TABLES `homofix_app_addon` WRITE;
+/*!40000 ALTER TABLE `homofix_app_addon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_addon` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_adminhod`
+--
+
+DROP TABLE IF EXISTS `homofix_app_adminhod`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_adminhod` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `mobile` varchar(20) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `admin_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_id` (`admin_id`),
+  CONSTRAINT `homofix_app_adminhod_admin_id_86b1adfe_fk_homofix_a` FOREIGN KEY (`admin_id`) REFERENCES `homofix_app_customuser` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_adminhod`
+--
+
+LOCK TABLES `homofix_app_adminhod` WRITE;
+/*!40000 ALTER TABLE `homofix_app_adminhod` DISABLE KEYS */;
+INSERT INTO `homofix_app_adminhod` VALUES (1,NULL,'2023-06-17 08:31:32.197122','2023-06-17 08:31:32.197151',1);
+/*!40000 ALTER TABLE `homofix_app_adminhod` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_alltechnicianlocation`
+--
+
+DROP TABLE IF EXISTS `homofix_app_alltechnicianlocation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_alltechnicianlocation` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `location` varchar(100) DEFAULT NULL,
+  `date` date NOT NULL,
+  `technician_id_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_alltechn_technician_id_id_ac7b5adb_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_alltechn_technician_id_id_ac7b5adb_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_alltechnicianlocation`
+--
+
+LOCK TABLES `homofix_app_alltechnicianlocation` WRITE;
+/*!40000 ALTER TABLE `homofix_app_alltechnicianlocation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_alltechnicianlocation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_applicantcarrer`
+--
+
+DROP TABLE IF EXISTS `homofix_app_applicantcarrer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_applicantcarrer` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `resume` varchar(100) DEFAULT NULL,
+  `date` date NOT NULL,
+  `carrer_id_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_applican_carrer_id_id_2753aea2_fk_homofix_a` (`carrer_id_id`),
+  CONSTRAINT `homofix_app_applican_carrer_id_id_2753aea2_fk_homofix_a` FOREIGN KEY (`carrer_id_id`) REFERENCES `homofix_app_carrer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_applicantcarrer`
+--
+
+LOCK TABLES `homofix_app_applicantcarrer` WRITE;
+/*!40000 ALTER TABLE `homofix_app_applicantcarrer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_applicantcarrer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_attendance`
+--
+
+DROP TABLE IF EXISTS `homofix_app_attendance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_attendance` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `login_time` datetime(6) NOT NULL,
+  `logout_time` datetime(6) DEFAULT NULL,
+  `support_id_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_attendan_support_id_id_eb47b489_fk_homofix_a` (`support_id_id`),
+  CONSTRAINT `homofix_app_attendan_support_id_id_eb47b489_fk_homofix_a` FOREIGN KEY (`support_id_id`) REFERENCES `homofix_app_support` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_attendance`
+--
+
+LOCK TABLES `homofix_app_attendance` WRITE;
+/*!40000 ALTER TABLE `homofix_app_attendance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_attendance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_blog`
+--
+
+DROP TABLE IF EXISTS `homofix_app_blog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_blog` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `feature_img` varchar(100) NOT NULL,
+  `content` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_blog`
+--
+
+LOCK TABLES `homofix_app_blog` WRITE;
+/*!40000 ALTER TABLE `homofix_app_blog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_blog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_booking`
+--
+
+DROP TABLE IF EXISTS `homofix_app_booking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_booking` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `booking_date` datetime(6) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `description` longtext,
+  `order_id` varchar(9) DEFAULT NULL,
+  `customer_id` bigint NOT NULL,
+  `supported_by_id` bigint DEFAULT NULL,
+  `cash_on_service` tinyint(1) DEFAULT NULL,
+  `online` tinyint(1) DEFAULT NULL,
+  `admin_by_id` int DEFAULT NULL,
+  `coupon_id` bigint DEFAULT NULL,
+  `New_payment` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_id` (`order_id`),
+  KEY `homofix_app_booking_customer_id_8643a951_fk_homofix_a` (`customer_id`),
+  KEY `homofix_app_booking_supported_by_id_02720fd4_fk_homofix_a` (`supported_by_id`),
+  KEY `homofix_app_booking_admin_by_id_8d1bd68f_fk_homofix_a` (`admin_by_id`),
+  KEY `homofix_app_booking_coupon_id_1b2b2a8b_fk_homofix_app_coupon_id` (`coupon_id`),
+  CONSTRAINT `homofix_app_booking_admin_by_id_8d1bd68f_fk_homofix_a` FOREIGN KEY (`admin_by_id`) REFERENCES `homofix_app_adminhod` (`id`),
+  CONSTRAINT `homofix_app_booking_coupon_id_1b2b2a8b_fk_homofix_app_coupon_id` FOREIGN KEY (`coupon_id`) REFERENCES `homofix_app_coupon` (`id`),
+  CONSTRAINT `homofix_app_booking_customer_id_8643a951_fk_homofix_a` FOREIGN KEY (`customer_id`) REFERENCES `homofix_app_customer` (`id`),
+  CONSTRAINT `homofix_app_booking_supported_by_id_02720fd4_fk_homofix_a` FOREIGN KEY (`supported_by_id`) REFERENCES `homofix_app_support` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_booking`
+--
+
+LOCK TABLES `homofix_app_booking` WRITE;
+/*!40000 ALTER TABLE `homofix_app_booking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_booking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_bookingproduct`
+--
+
+DROP TABLE IF EXISTS `homofix_app_bookingproduct`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_bookingproduct` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `quantity` int NOT NULL,
+  `total_price` int NOT NULL,
+  `total_price_with_tax` decimal(10,2) DEFAULT NULL,
+  `booking_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_bookingp_product_id_f40994e5_fk_homofix_a` (`product_id`),
+  KEY `homofix_app_bookingp_booking_id_1463e0de_fk_homofix_a` (`booking_id`),
+  CONSTRAINT `homofix_app_bookingp_booking_id_1463e0de_fk_homofix_a` FOREIGN KEY (`booking_id`) REFERENCES `homofix_app_booking` (`id`),
+  CONSTRAINT `homofix_app_bookingp_product_id_f40994e5_fk_homofix_a` FOREIGN KEY (`product_id`) REFERENCES `homofix_app_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_bookingproduct`
+--
+
+LOCK TABLES `homofix_app_bookingproduct` WRITE;
+/*!40000 ALTER TABLE `homofix_app_bookingproduct` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_bookingproduct` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_carrer`
+--
+
+DROP TABLE IF EXISTS `homofix_app_carrer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_carrer` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `description` longtext NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_carrer`
+--
+
+LOCK TABLES `homofix_app_carrer` WRITE;
+/*!40000 ALTER TABLE `homofix_app_carrer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_carrer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_category`
+--
+
+DROP TABLE IF EXISTS `homofix_app_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_category` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(50) NOT NULL,
+  `created_at` date NOT NULL,
+  `last_updated` datetime(6) NOT NULL,
+  `icon` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_category`
+--
+
+LOCK TABLES `homofix_app_category` WRITE;
+/*!40000 ALTER TABLE `homofix_app_category` DISABLE KEYS */;
+INSERT INTO `homofix_app_category` VALUES (1,'Deep Cleaning','2023-06-17','2023-06-17 11:53:59.072680','CatogryIcon/logolight.png');
+/*!40000 ALTER TABLE `homofix_app_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_contactus`
+--
+
+DROP TABLE IF EXISTS `homofix_app_contactus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_contactus` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_contactus`
+--
+
+LOCK TABLES `homofix_app_contactus` WRITE;
+/*!40000 ALTER TABLE `homofix_app_contactus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_contactus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_coupon`
+--
+
+DROP TABLE IF EXISTS `homofix_app_coupon`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_coupon` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) NOT NULL,
+  `discount_amount` decimal(10,2) NOT NULL,
+  `validity_period` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_coupon`
+--
+
+LOCK TABLES `homofix_app_coupon` WRITE;
+/*!40000 ALTER TABLE `homofix_app_coupon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_coupon` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_customer`
+--
+
+DROP TABLE IF EXISTS `homofix_app_customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_customer` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `address` varchar(100) NOT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
+  `area` varchar(50) DEFAULT NULL,
+  `zipcode` int DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `admin_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_id` (`admin_id`),
+  CONSTRAINT `homofix_app_customer_admin_id_e32b6233_fk_homofix_a` FOREIGN KEY (`admin_id`) REFERENCES `homofix_app_customuser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_customer`
+--
+
+LOCK TABLES `homofix_app_customer` WRITE;
+/*!40000 ALTER TABLE `homofix_app_customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_customuser`
+--
+
+DROP TABLE IF EXISTS `homofix_app_customuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_customuser` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(150) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `user_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_customuser`
+--
+
+LOCK TABLES `homofix_app_customuser` WRITE;
+/*!40000 ALTER TABLE `homofix_app_customuser` DISABLE KEYS */;
+INSERT INTO `homofix_app_customuser` VALUES (1,'pbkdf2_sha256$600000$vVOQmr96eYplQ7c0EqmVxZ$Kx+ArQUNl6NfOBbucljGNnJnEofk8Ri3kzZ8K6upq8I=','2023-06-17 11:42:12.458711',1,'admin','','','',1,1,'2023-06-17 08:31:31.711225','1'),(2,'pbkdf2_sha256$600000$MYEL5cHzFYCuRO8tqd7TGA$lBnYQWu4KaDJ1wIsB88apeKYvLNVxjvGvXR3I1ZTd/o=',NULL,0,'Ravi605','Ravi','Patel','raviranjan.trygon@gmail.com',0,1,'2023-06-17 11:57:20.508955','2');
+/*!40000 ALTER TABLE `homofix_app_customuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_customuser_groups`
+--
+
+DROP TABLE IF EXISTS `homofix_app_customuser_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_customuser_groups` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customuser_id` bigint NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `homofix_app_customuser_g_customuser_id_group_id_0b5e6b5e_uniq` (`customuser_id`,`group_id`),
+  KEY `homofix_app_customuser_groups_group_id_1859ace2_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `homofix_app_customus_customuser_id_8a1fd400_fk_homofix_a` FOREIGN KEY (`customuser_id`) REFERENCES `homofix_app_customuser` (`id`),
+  CONSTRAINT `homofix_app_customuser_groups_group_id_1859ace2_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_customuser_groups`
+--
+
+LOCK TABLES `homofix_app_customuser_groups` WRITE;
+/*!40000 ALTER TABLE `homofix_app_customuser_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_customuser_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_customuser_user_permissions`
+--
+
+DROP TABLE IF EXISTS `homofix_app_customuser_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_customuser_user_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customuser_id` bigint NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `homofix_app_customuser_u_customuser_id_permission_afaf9fc5_uniq` (`customuser_id`,`permission_id`),
+  KEY `homofix_app_customus_permission_id_3906e194_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `homofix_app_customus_customuser_id_20dd219f_fk_homofix_a` FOREIGN KEY (`customuser_id`) REFERENCES `homofix_app_customuser` (`id`),
+  CONSTRAINT `homofix_app_customus_permission_id_3906e194_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_customuser_user_permissions`
+--
+
+LOCK TABLES `homofix_app_customuser_user_permissions` WRITE;
+/*!40000 ALTER TABLE `homofix_app_customuser_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_customuser_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_faq`
+--
+
+DROP TABLE IF EXISTS `homofix_app_faq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_faq` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `question` varchar(255) NOT NULL,
+  `answer` longtext NOT NULL,
+  `product_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_faq_product_id_69ae4f92_fk_homofix_app_product_id` (`product_id`),
+  CONSTRAINT `homofix_app_faq_product_id_69ae4f92_fk_homofix_app_product_id` FOREIGN KEY (`product_id`) REFERENCES `homofix_app_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_faq`
+--
+
+LOCK TABLES `homofix_app_faq` WRITE;
+/*!40000 ALTER TABLE `homofix_app_faq` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_faq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_feedback`
+--
+
+DROP TABLE IF EXISTS `homofix_app_feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_feedback` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customer_id_id` bigint NOT NULL,
+  `rating` int NOT NULL,
+  `technician_id_id` int NOT NULL,
+  `description` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_feedback_customer_id_id_9bbfed86_fk_homofix_a` (`customer_id_id`),
+  KEY `homofix_app_feedback_technician_id_id_66630a7b_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_feedback_customer_id_id_9bbfed86_fk_homofix_a` FOREIGN KEY (`customer_id_id`) REFERENCES `homofix_app_customer` (`id`),
+  CONSTRAINT `homofix_app_feedback_technician_id_id_66630a7b_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_feedback`
+--
+
+LOCK TABLES `homofix_app_feedback` WRITE;
+/*!40000 ALTER TABLE `homofix_app_feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_hodsharepercentage`
+--
+
+DROP TABLE IF EXISTS `homofix_app_hodsharepercentage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_hodsharepercentage` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `percentage` decimal(10,2) NOT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_hodsharepercentage`
+--
+
+LOCK TABLES `homofix_app_hodsharepercentage` WRITE;
+/*!40000 ALTER TABLE `homofix_app_hodsharepercentage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_hodsharepercentage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_homepageservice`
+--
+
+DROP TABLE IF EXISTS `homofix_app_homepageservice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_homepageservice` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `category_id_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_homepage_category_id_id_aa779aaf_fk_homofix_a` (`category_id_id`),
+  CONSTRAINT `homofix_app_homepage_category_id_id_aa779aaf_fk_homofix_a` FOREIGN KEY (`category_id_id`) REFERENCES `homofix_app_category` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_homepageservice`
+--
+
+LOCK TABLES `homofix_app_homepageservice` WRITE;
+/*!40000 ALTER TABLE `homofix_app_homepageservice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_homepageservice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_invoice`
+--
+
+DROP TABLE IF EXISTS `homofix_app_invoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_invoice` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `invoice` longblob,
+  `invoice_no` int NOT NULL,
+  `booking_id_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_invoice_booking_id_id_1e100c0f_fk_homofix_a` (`booking_id_id`),
+  CONSTRAINT `homofix_app_invoice_booking_id_id_1e100c0f_fk_homofix_a` FOREIGN KEY (`booking_id_id`) REFERENCES `homofix_app_booking` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_invoice`
+--
+
+LOCK TABLES `homofix_app_invoice` WRITE;
+/*!40000 ALTER TABLE `homofix_app_invoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_invoice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_jobenquiry`
+--
+
+DROP TABLE IF EXISTS `homofix_app_jobenquiry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_jobenquiry` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `resume` varchar(100) DEFAULT NULL,
+  `date` date NOT NULL,
+  `expert_in` varchar(100) NOT NULL,
+  `full_address` longtext NOT NULL DEFAULT (_utf8mb3'2'),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_jobenquiry`
+--
+
+LOCK TABLES `homofix_app_jobenquiry` WRITE;
+/*!40000 ALTER TABLE `homofix_app_jobenquiry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_jobenquiry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_kyc`
+--
+
+DROP TABLE IF EXISTS `homofix_app_kyc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_kyc` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `Ac_no` varchar(50) NOT NULL,
+  `ifsc_code` varchar(50) NOT NULL,
+  `branch` varchar(50) NOT NULL,
+  `bank_holder_name` varchar(100) NOT NULL,
+  `technician_id_id` int NOT NULL,
+  `bank_active` tinyint(1) NOT NULL,
+  `bank_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_kyc_technician_id_id_38c627e0_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_kyc_technician_id_id_38c627e0_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_kyc`
+--
+
+LOCK TABLES `homofix_app_kyc` WRITE;
+/*!40000 ALTER TABLE `homofix_app_kyc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_kyc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_legalpage`
+--
+
+DROP TABLE IF EXISTS `homofix_app_legalpage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_legalpage` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `content` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_legalpage`
+--
+
+LOCK TABLES `homofix_app_legalpage` WRITE;
+/*!40000 ALTER TABLE `homofix_app_legalpage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_legalpage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_mostviewed`
+--
+
+DROP TABLE IF EXISTS `homofix_app_mostviewed`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_mostviewed` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `img` varchar(100) DEFAULT NULL,
+  `product_id_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_mostview_product_id_id_9d91dda7_fk_homofix_a` (`product_id_id`),
+  CONSTRAINT `homofix_app_mostview_product_id_id_9d91dda7_fk_homofix_a` FOREIGN KEY (`product_id_id`) REFERENCES `homofix_app_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_mostviewed`
+--
+
+LOCK TABLES `homofix_app_mostviewed` WRITE;
+/*!40000 ALTER TABLE `homofix_app_mostviewed` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_mostviewed` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_offer`
+--
+
+DROP TABLE IF EXISTS `homofix_app_offer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_offer` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `offer_pic` varchar(100) NOT NULL,
+  `url` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_offer`
+--
+
+LOCK TABLES `homofix_app_offer` WRITE;
+/*!40000 ALTER TABLE `homofix_app_offer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_offer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_payment`
+--
+
+DROP TABLE IF EXISTS `homofix_app_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_payment` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `payment_mode` varchar(20) NOT NULL,
+  `date` date DEFAULT NULL,
+  `booking_id_id` bigint NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `payment_id` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_payment_booking_id_id_67643cd0_fk_homofix_a` (`booking_id_id`),
+  CONSTRAINT `homofix_app_payment_booking_id_id_67643cd0_fk_homofix_a` FOREIGN KEY (`booking_id_id`) REFERENCES `homofix_app_booking` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_payment`
+--
+
+LOCK TABLES `homofix_app_payment` WRITE;
+/*!40000 ALTER TABLE `homofix_app_payment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_product`
+--
+
+DROP TABLE IF EXISTS `homofix_app_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_product` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `product_pic` varchar(100) NOT NULL,
+  `product_title` varchar(50) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `price` int NOT NULL,
+  `dis_amt` int DEFAULT NULL,
+  `warranty` varchar(50) DEFAULT NULL,
+  `warranty_desc` longtext,
+  `description` longtext NOT NULL,
+  `created_at` date NOT NULL,
+  `quantity` int NOT NULL,
+  `subcategory_id` bigint NOT NULL,
+  `selling_price` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_product_subcategory_id_9fb826fe_fk_homofix_a` (`subcategory_id`),
+  CONSTRAINT `homofix_app_product_subcategory_id_9fb826fe_fk_homofix_a` FOREIGN KEY (`subcategory_id`) REFERENCES `homofix_app_subcategory` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_product`
+--
+
+LOCK TABLES `homofix_app_product` WRITE;
+/*!40000 ALTER TABLE `homofix_app_product` DISABLE KEYS */;
+INSERT INTO `homofix_app_product` VALUES (1,'Product Image/appliances.jpg','Ac Repair Service','Bajaj Ac',1500,100,'1 month','<p>xyz&nbsp;</p>\r\n','<p>xyz</p>\r\n','2023-06-17',1,1,1400);
+/*!40000 ALTER TABLE `homofix_app_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_rebooking`
+--
+
+DROP TABLE IF EXISTS `homofix_app_rebooking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_rebooking` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `booking_date` datetime(6) DEFAULT NULL,
+  `status` varchar(20) NOT NULL,
+  `date` datetime(6) NOT NULL,
+  `booking_product_id` bigint NOT NULL,
+  `technician_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_rebookin_booking_product_id_509b5adc_fk_homofix_a` (`booking_product_id`),
+  KEY `homofix_app_rebookin_technician_id_2cc094e9_fk_homofix_a` (`technician_id`),
+  CONSTRAINT `homofix_app_rebookin_booking_product_id_509b5adc_fk_homofix_a` FOREIGN KEY (`booking_product_id`) REFERENCES `homofix_app_bookingproduct` (`id`),
+  CONSTRAINT `homofix_app_rebookin_technician_id_2cc094e9_fk_homofix_a` FOREIGN KEY (`technician_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_rebooking`
+--
+
+LOCK TABLES `homofix_app_rebooking` WRITE;
+/*!40000 ALTER TABLE `homofix_app_rebooking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_rebooking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_rechargehistory`
+--
+
+DROP TABLE IF EXISTS `homofix_app_rechargehistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_rechargehistory` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `amount` int NOT NULL,
+  `date` date NOT NULL,
+  `technician_id_id` int NOT NULL,
+  `payment_id` varchar(50) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_recharge_technician_id_id_5987d0ac_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_recharge_technician_id_id_5987d0ac_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_rechargehistory`
+--
+
+LOCK TABLES `homofix_app_rechargehistory` WRITE;
+/*!40000 ALTER TABLE `homofix_app_rechargehistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_rechargehistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_settlement`
+--
+
+DROP TABLE IF EXISTS `homofix_app_settlement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_settlement` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `amount` decimal(10,2) NOT NULL,
+  `settlement` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `technician_id_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_settleme_technician_id_id_c22ea95b_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_settleme_technician_id_id_c22ea95b_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_settlement`
+--
+
+LOCK TABLES `homofix_app_settlement` WRITE;
+/*!40000 ALTER TABLE `homofix_app_settlement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_settlement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_share`
+--
+
+DROP TABLE IF EXISTS `homofix_app_share`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_share` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `technician_share` decimal(10,2) NOT NULL,
+  `date` date DEFAULT NULL,
+  `hod_share_percentage_id` bigint NOT NULL,
+  `task_id` bigint NOT NULL,
+  `company_share` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_share_hod_share_percentage_0a9d49df_fk_homofix_a` (`hod_share_percentage_id`),
+  KEY `homofix_app_share_task_id_e815903b_fk_homofix_app_task_id` (`task_id`),
+  CONSTRAINT `homofix_app_share_hod_share_percentage_0a9d49df_fk_homofix_a` FOREIGN KEY (`hod_share_percentage_id`) REFERENCES `homofix_app_hodsharepercentage` (`id`),
+  CONSTRAINT `homofix_app_share_task_id_e815903b_fk_homofix_app_task_id` FOREIGN KEY (`task_id`) REFERENCES `homofix_app_task` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_share`
+--
+
+LOCK TABLES `homofix_app_share` WRITE;
+/*!40000 ALTER TABLE `homofix_app_share` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_share` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_showonline`
+--
+
+DROP TABLE IF EXISTS `homofix_app_showonline`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_showonline` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `online` tinyint(1) NOT NULL,
+  `date` datetime(6) NOT NULL,
+  `technician_id_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_showonli_technician_id_id_ec09f534_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_showonli_technician_id_id_ec09f534_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_showonline`
+--
+
+LOCK TABLES `homofix_app_showonline` WRITE;
+/*!40000 ALTER TABLE `homofix_app_showonline` DISABLE KEYS */;
+INSERT INTO `homofix_app_showonline` VALUES (1,0,'2023-06-17 11:57:21.011463',1);
+/*!40000 ALTER TABLE `homofix_app_showonline` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_spareparts`
+--
+
+DROP TABLE IF EXISTS `homofix_app_spareparts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_spareparts` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `spare_part` varchar(100) DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `description` longtext NOT NULL,
+  `created_at` date NOT NULL,
+  `product_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_sparepar_product_id_5f058aac_fk_homofix_a` (`product_id`),
+  CONSTRAINT `homofix_app_sparepar_product_id_5f058aac_fk_homofix_a` FOREIGN KEY (`product_id`) REFERENCES `homofix_app_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_spareparts`
+--
+
+LOCK TABLES `homofix_app_spareparts` WRITE;
+/*!40000 ALTER TABLE `homofix_app_spareparts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_spareparts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_subcategory`
+--
+
+DROP TABLE IF EXISTS `homofix_app_subcategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_subcategory` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `created_at` date NOT NULL,
+  `last_updated` datetime(6) NOT NULL,
+  `Category_id_id` bigint NOT NULL,
+  `subcategory_image` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_subcateg_Category_id_id_4e1628aa_fk_homofix_a` (`Category_id_id`),
+  CONSTRAINT `homofix_app_subcateg_Category_id_id_4e1628aa_fk_homofix_a` FOREIGN KEY (`Category_id_id`) REFERENCES `homofix_app_category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_subcategory`
+--
+
+LOCK TABLES `homofix_app_subcategory` WRITE;
+/*!40000 ALTER TABLE `homofix_app_subcategory` DISABLE KEYS */;
+INSERT INTO `homofix_app_subcategory` VALUES (1,'cleaning','2023-06-17','2023-06-17 11:54:46.316416',1,'subcategory-Image/Group.png');
+/*!40000 ALTER TABLE `homofix_app_subcategory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_support`
+--
+
+DROP TABLE IF EXISTS `homofix_app_support`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_support` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `profile_pic` varchar(100) DEFAULT NULL,
+  `address` varchar(100) NOT NULL,
+  `permanent_address` varchar(50) DEFAULT NULL,
+  `father_name` varchar(100) DEFAULT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `marital_status` varchar(50) DEFAULT NULL,
+  `d_o_b` varchar(50) DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
+  `support_id` varchar(12) NOT NULL,
+  `joining_date` date DEFAULT NULL,
+  `application_form` varchar(100) DEFAULT NULL,
+  `document_form` varchar(100) DEFAULT NULL,
+  `can_assign_task` tinyint(1) NOT NULL,
+  `can_new_booking` tinyint(1) NOT NULL,
+  `can_cancel_booking` tinyint(1) NOT NULL,
+  `can_rebooking` tinyint(1) NOT NULL,
+  `can_expert_create` tinyint(1) NOT NULL,
+  `can_contact_us_enquiry` tinyint(1) NOT NULL,
+  `can_job_enquiry` tinyint(1) NOT NULL,
+  `admin_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_id` (`admin_id`),
+  CONSTRAINT `homofix_app_support_admin_id_874e67d9_fk_homofix_a` FOREIGN KEY (`admin_id`) REFERENCES `homofix_app_customuser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_support`
+--
+
+LOCK TABLES `homofix_app_support` WRITE;
+/*!40000 ALTER TABLE `homofix_app_support` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_support` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_support_bookings`
+--
+
+DROP TABLE IF EXISTS `homofix_app_support_bookings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_support_bookings` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `support_id` bigint NOT NULL,
+  `booking_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `homofix_app_support_bookings_support_id_booking_id_0c9326db_uniq` (`support_id`,`booking_id`),
+  KEY `homofix_app_support__booking_id_00b112af_fk_homofix_a` (`booking_id`),
+  CONSTRAINT `homofix_app_support__booking_id_00b112af_fk_homofix_a` FOREIGN KEY (`booking_id`) REFERENCES `homofix_app_booking` (`id`),
+  CONSTRAINT `homofix_app_support__support_id_24d489e6_fk_homofix_a` FOREIGN KEY (`support_id`) REFERENCES `homofix_app_support` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_support_bookings`
+--
+
+LOCK TABLES `homofix_app_support_bookings` WRITE;
+/*!40000 ALTER TABLE `homofix_app_support_bookings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_support_bookings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_task`
+--
+
+DROP TABLE IF EXISTS `homofix_app_task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_task` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `description` longtext,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  `booking_id` bigint NOT NULL,
+  `supported_by_id` bigint DEFAULT NULL,
+  `technician_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_task_booking_id_4fc62ff0_fk_homofix_app_booking_id` (`booking_id`),
+  KEY `homofix_app_task_supported_by_id_efb86bc9_fk_homofix_a` (`supported_by_id`),
+  KEY `homofix_app_task_technician_id_246b6f17_fk_homofix_a` (`technician_id`),
+  CONSTRAINT `homofix_app_task_booking_id_4fc62ff0_fk_homofix_app_booking_id` FOREIGN KEY (`booking_id`) REFERENCES `homofix_app_booking` (`id`),
+  CONSTRAINT `homofix_app_task_supported_by_id_efb86bc9_fk_homofix_a` FOREIGN KEY (`supported_by_id`) REFERENCES `homofix_app_support` (`id`),
+  CONSTRAINT `homofix_app_task_technician_id_246b6f17_fk_homofix_a` FOREIGN KEY (`technician_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_task`
+--
+
+LOCK TABLES `homofix_app_task` WRITE;
+/*!40000 ALTER TABLE `homofix_app_task` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_task` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_technician`
+--
+
+DROP TABLE IF EXISTS `homofix_app_technician`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_technician` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `profile_pic` varchar(100) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `expert_id` varchar(12) NOT NULL,
+  `Father_name` varchar(100) DEFAULT NULL,
+  `present_address` longtext,
+  `permanent_address` longtext,
+  `Id_Proof` varchar(100) DEFAULT NULL,
+  `id_type` varchar(100) DEFAULT NULL,
+  `id_proof_document` varchar(100) DEFAULT NULL,
+  `application_form` varchar(100) DEFAULT NULL,
+  `rating` varchar(50) DEFAULT NULL,
+  `serving_area` varchar(100) DEFAULT NULL,
+  `highest_qualification` varchar(100) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
+  `created_at` date NOT NULL,
+  `updated_at` date NOT NULL,
+  `joining_date` date DEFAULT NULL,
+  `admin_id` bigint NOT NULL,
+  `supported_by_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `admin_id` (`admin_id`),
+  KEY `homofix_app_technici_supported_by_id_41bf72b7_fk_homofix_a` (`supported_by_id`),
+  CONSTRAINT `homofix_app_technici_admin_id_6f341e27_fk_homofix_a` FOREIGN KEY (`admin_id`) REFERENCES `homofix_app_customuser` (`id`),
+  CONSTRAINT `homofix_app_technici_supported_by_id_41bf72b7_fk_homofix_a` FOREIGN KEY (`supported_by_id`) REFERENCES `homofix_app_support` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_technician`
+--
+
+LOCK TABLES `homofix_app_technician` WRITE;
+/*!40000 ALTER TABLE `homofix_app_technician` DISABLE KEYS */;
+INSERT INTO `homofix_app_technician` VALUES (1,'Technician/logo_2.png','9472064403','HE-001','Rk Chaoudhary','House no 122/22 sant nagar , Burari New Delhi','House no 122/22 sant nagar , Burari New Delhi','aadhaar_card',NULL,'ID Proof/shibu_ten.jpeg','','4','Model Town','12th','Uttar Pradesh','kanpur','Active','2023-06-17','2023-06-17','2023-06-17',2,NULL);
+/*!40000 ALTER TABLE `homofix_app_technician` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_technician_subcategories`
+--
+
+DROP TABLE IF EXISTS `homofix_app_technician_subcategories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_technician_subcategories` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `technician_id` int NOT NULL,
+  `subcategory_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `homofix_app_technician_s_technician_id_subcategor_386bfeec_uniq` (`technician_id`,`subcategory_id`),
+  KEY `homofix_app_technici_subcategory_id_0c684307_fk_homofix_a` (`subcategory_id`),
+  CONSTRAINT `homofix_app_technici_subcategory_id_0c684307_fk_homofix_a` FOREIGN KEY (`subcategory_id`) REFERENCES `homofix_app_subcategory` (`id`),
+  CONSTRAINT `homofix_app_technici_technician_id_2c968ca9_fk_homofix_a` FOREIGN KEY (`technician_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_technician_subcategories`
+--
+
+LOCK TABLES `homofix_app_technician_subcategories` WRITE;
+/*!40000 ALTER TABLE `homofix_app_technician_subcategories` DISABLE KEYS */;
+INSERT INTO `homofix_app_technician_subcategories` VALUES (1,1,1);
+/*!40000 ALTER TABLE `homofix_app_technician_subcategories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_technicianlocation`
+--
+
+DROP TABLE IF EXISTS `homofix_app_technicianlocation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_technicianlocation` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `location` varchar(100) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `booking_id_id` bigint DEFAULT NULL,
+  `technician_id_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_technici_booking_id_id_88cc9993_fk_homofix_a` (`booking_id_id`),
+  KEY `homofix_app_technici_technician_id_id_591e427a_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_technici_booking_id_id_88cc9993_fk_homofix_a` FOREIGN KEY (`booking_id_id`) REFERENCES `homofix_app_booking` (`id`),
+  CONSTRAINT `homofix_app_technici_technician_id_id_591e427a_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_technicianlocation`
+--
+
+LOCK TABLES `homofix_app_technicianlocation` WRITE;
+/*!40000 ALTER TABLE `homofix_app_technicianlocation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_technicianlocation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_wallet`
+--
+
+DROP TABLE IF EXISTS `homofix_app_wallet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_wallet` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `total_share` decimal(10,2) NOT NULL,
+  `technician_id_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_wallet_technician_id_id_8a267317_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_wallet_technician_id_id_8a267317_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_wallet`
+--
+
+LOCK TABLES `homofix_app_wallet` WRITE;
+/*!40000 ALTER TABLE `homofix_app_wallet` DISABLE KEYS */;
+INSERT INTO `homofix_app_wallet` VALUES (1,0.00,1);
+/*!40000 ALTER TABLE `homofix_app_wallet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_wallethistory`
+--
+
+DROP TABLE IF EXISTS `homofix_app_wallethistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_wallethistory` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `type` varchar(10) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `date` date DEFAULT NULL,
+  `wallet_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_wallethi_wallet_id_56d5eebe_fk_homofix_a` (`wallet_id`),
+  CONSTRAINT `homofix_app_wallethi_wallet_id_56d5eebe_fk_homofix_a` FOREIGN KEY (`wallet_id`) REFERENCES `homofix_app_wallet` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_wallethistory`
+--
+
+LOCK TABLES `homofix_app_wallethistory` WRITE;
+/*!40000 ALTER TABLE `homofix_app_wallethistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_wallethistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homofix_app_withdrawrequest`
+--
+
+DROP TABLE IF EXISTS `homofix_app_withdrawrequest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `homofix_app_withdrawrequest` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `amount` int NOT NULL,
+  `date` date NOT NULL,
+  `technician_id_id` int NOT NULL,
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homofix_app_withdraw_technician_id_id_ef4f0657_fk_homofix_a` (`technician_id_id`),
+  CONSTRAINT `homofix_app_withdraw_technician_id_id_ef4f0657_fk_homofix_a` FOREIGN KEY (`technician_id_id`) REFERENCES `homofix_app_technician` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homofix_app_withdrawrequest`
+--
+
+LOCK TABLES `homofix_app_withdrawrequest` WRITE;
+/*!40000 ALTER TABLE `homofix_app_withdrawrequest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homofix_app_withdrawrequest` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-06-17 18:58:50
