@@ -910,6 +910,7 @@ class Invoice(models.Model):
     booking_id = models.ForeignKey(Booking, on_delete=models.SET_NULL, null=True, blank=True)
     invoice = models.BinaryField(null=True, blank=True)
     invoice_no =  models.IntegerField(default=1)
+    updated_at = models.DateField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
