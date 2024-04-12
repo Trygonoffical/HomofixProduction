@@ -1302,6 +1302,8 @@ def booking_list(request):
     booking_count = Booking.objects.filter(status="New").count()
     booking = Booking.objects.all().order_by("-id")
     bookings = Booking.objects.filter(status="New").order_by("-id")
+    order_id = Booking.objects.filter().last()
+    print("order iddd",order_id)
 
     technicians = Technician.objects.all()
     tasks = Task.objects.all()

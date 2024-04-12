@@ -418,21 +418,33 @@ class Booking(models.Model):
     
     
     
-   
-
     def save(self, *args, **kwargs):
+        
         if not self.order_id:
-            with transaction.atomic():
-                today = datetime.datetime.now()
-                year_month = today.strftime('%Y%m')
-                last_order = Booking.objects.select_for_update().filter(order_id__startswith=year_month).order_by('-id').first()
-                if last_order:
-                    last_id = int(last_order.order_id[-2:])
-                else:
-                    last_id = 0
-                new_id = last_id + 1
-                self.order_id = f'{year_month}{new_id:02}'
+            today = datetime.datetime.now()
+            year_month = today.strftime('%Y%m')
+            last_order = Booking.objects.filter(order_id__startswith=year_month).order_by('-id').first()
+            if last_order:
+                last_order_id_numeric = int(last_order.order_id[6:])  # Extract numeric part from the order_id
+                new_id = last_order_id_numeric + 1
+            else:
+                new_id = 1
+            self.order_id = f'{year_month}{new_id:02}'
         super().save(*args, **kwargs)
+
+    # def save(self, *args, **kwargs):
+    #     if not self.order_id:
+    #         with transaction.atomic():
+    #             today = datetime.datetime.now()
+    #             year_month = today.strftime('%Y%m')
+    #             last_order = Booking.objects.select_for_update().filter(order_id__startswith=year_month).order_by('-id').first()
+    #             if last_order:
+    #                 last_id = int(last_order.order_id[-2:])
+    #             else:
+    #                 last_id = 0
+    #             new_id = last_id + 1
+    #             self.order_id = f'{year_month}{new_id:02}'
+    #     super().save(*args, **kwargs)
 
     @property
     def total_amount(self):
