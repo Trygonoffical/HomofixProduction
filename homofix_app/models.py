@@ -426,12 +426,13 @@ class Booking(models.Model):
                 today = datetime.datetime.now()
                 year_month = today.strftime('%Y%m')
                 last_order = Booking.objects.select_for_update().filter(order_id__startswith=year_month).order_by('-id').first()
+                print("lasttt orderrrr",last_order)
                 if last_order:
-                    last_id = int(last_order.order_id[-2:])
+                    last_id = int(last_order.order_id[-3:])
                 else:
                     last_id = 0
                 new_id = last_id + 1
-                self.order_id = f'{year_month}{new_id:02}'
+                self.order_id = f'{year_month}{new_id:03}'
         super().save(*args, **kwargs)
 
     @property
