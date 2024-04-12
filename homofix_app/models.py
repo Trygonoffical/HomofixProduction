@@ -403,7 +403,7 @@ class Booking(models.Model):
     admin_by = models.ForeignKey(AdminHOD, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings_admin_by')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='New')
     description = models.TextField(null=True, blank=True) 
-    order_id = models.CharField(max_length=100, unique=True)
+    order_id = models.CharField(max_length=100, unique=True, null=True, blank=True)
     cash_on_service = models.BooleanField(default=True, null=True, blank=True)
     online = models.BooleanField(default=False, null=True, blank=True)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings_used_coupon')
@@ -422,19 +422,16 @@ class Booking(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.order_id:
-            with transaction.atomic():
-                today = datetime.datetime.now()
-                year_month = today.strftime('%Y%m')
-                last_order = Booking.objects.select_for_update().filter(order_id__startswith=year_month).order_by('-id').first()
-                print("lasttt orderrrr",last_order)
-                if last_order:
-                    last_id = int(last_order.order_id[-3:])
-                else:
-                    last_id = 0
-                new_id = last_id + 1
-                self.order_id = f'{year_month}{new_id:03}'
+            today = datetime.datetime.now()
+            year_month = today.strftime('%Y%m')
+            last_order = Booking.objects.filter(order_id__startswith=year_month).order_by('-id').first()
+            if last_order:
+                last_id = int(last_order.order_id[-3:])
+            else:
+                last_id = 0
+            new_id = last_id + 1
+            self.order_id = f'{year_month}{new_id:03}'
         super().save(*args, **kwargs)
-
     @property
     def total_amount(self):
         booking_products_prefetch = Prefetch('booking_product', queryset=BookingProduct.objects.select_related('product'))
