@@ -403,7 +403,7 @@ class Booking(models.Model):
     admin_by = models.ForeignKey(AdminHOD, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings_admin_by')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='New')
     description = models.TextField(null=True, blank=True) 
-    order_id = models.CharField(max_length=9, unique=True)
+    order_id = models.CharField(max_length=100, unique=True)
     cash_on_service = models.BooleanField(default=True, null=True, blank=True)
     online = models.BooleanField(default=False, null=True, blank=True)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings_used_coupon')
