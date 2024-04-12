@@ -108,7 +108,7 @@ class TechnicianAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class TechnicianAdmin(admin.ModelAdmin):
-    list_display=['id','subtotal','total_amount','tax_amount','total_addons','final_amount','pay_amt','coupon_code','coupon_discount_amount','coupon_validity_period']
+    list_display=['id','subtotal','total_amount','tax_amount','total_addons','final_amount','pay_amt','coupon_code','coupon_discount_amount','coupon_validity_period','order_id']
 
 
 @admin.register(Support)
