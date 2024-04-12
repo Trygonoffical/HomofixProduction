@@ -250,6 +250,8 @@ class testingBooking(serializers.ModelSerializer):
             BookingProduct.objects.create(booking=booking, **product_data)
         return booking
 
+        
+
 class BokingSerializer(serializers.ModelSerializer):
     # customer = customerSerializer()
     # products = BookingProductSerializer(source='bookingproduct_set', many=True)
