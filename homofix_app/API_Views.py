@@ -128,7 +128,7 @@ class TaskViewSet(ModelViewSet):
                
                 # return Response({'success': True})
                 if booking.status == "Completed" and booking.online == True:
-                    print("onlineeeeeeeeeeeee")
+                   
                     # tax_rate = 0.18
                     booking_amount = booking.total_amount
 
