@@ -331,7 +331,7 @@ class TaskViewSet(ModelViewSet):
                                 options = {"enable-local-file-access": ""}
 
                                 pdf_data = pdfkit.from_string(
-                                    input_file, False, options=options
+                                    input_file, False
                                 )
 
                                 if pdf_data:
