@@ -165,8 +165,8 @@
             <div id="demm">
                 {% if booking.booking_id.coupon_id %}
                 <p>Subtotal </p>
-                {% else %}
-                <p>Subtotal </p>
+                {% comment %} {% else %}
+                <p>Subtotal </p> {% endcomment %}
                 {% endif %}
                 {% if booking.booking_id.coupon_id %}
                 <p>Coupon Discount</p>
@@ -177,8 +177,8 @@
             <div id="nano">
                 {% if booking.booking_id.coupon_id %}
                 <p>{% call_subtotal_invoice booking.booking_id.total_amount booking.booking_id.coupon_discount_amount %}</p>
-                {% else %}
-                <p>{{booking.booking_id.total_amount}}</p>
+                {% comment %} {% else %}
+                <p>{{booking.booking_id.total_amount}}</p> {% endcomment %}
                 {% endif %}
                 {% if booking.booking_id.coupon_id %}
                 <p>{{booking.booking_id.coupon_discount_amount}}</p>
