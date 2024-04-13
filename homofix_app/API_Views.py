@@ -97,7 +97,7 @@ class ExpertViewSet(ModelViewSet):
         return Response(serializer.data)
 
     
-import logging
+
 class TaskViewSet(ModelViewSet):
     authentication_classes = [BasicAuthentication]
     serializer_class = TaskSerializer
@@ -114,8 +114,6 @@ class TaskViewSet(ModelViewSet):
 
     # @action(detail=False, methods=['PATCH'])
     def put(self, request):
-        print("heloooooooooo opopo")
-        logging.info("Hello, this is a testing message")
         booking_id = request.data.get("booking_id")
         print("bookinggggg idddd",booking_id)
         status = request.data.get("status")
@@ -198,44 +196,44 @@ class TaskViewSet(ModelViewSet):
 
                         bkng_id = Booking.objects.filter(id=booking_id)
                         if booking:
-                            # invoice = Invoice.objects.filter(booking_id=booking).first()
-                            # if not invoice:
-                            invoice = Invoice.objects.create(booking_id=booking)
-                            bookingprod = BookingProduct.objects.filter(
-                                booking=booking
-                            ).first()
+                            invoice = Invoice.objects.filter(booking_id=booking).first()
+                            if not invoice:
+                                invoice = Invoice.objects.create(booking_id=booking)
+                                bookingprod = BookingProduct.objects.filter(
+                                    booking=booking
+                                ).first()
 
-                            # addon = Addon.objects.filter(booking_prod_id=bookingprod)
+                                # addon = Addon.objects.filter(booking_prod_id=bookingprod)
 
-                            addon = Addon.objects.filter(
-                                booking_prod_id=bookingprod
-                            )
+                                addon = Addon.objects.filter(
+                                    booking_prod_id=bookingprod
+                                )
 
-                            input_file = render_to_string(
-                                "Invoice/invoice.html",
-                                {
-                                    "booking": invoice,
-                                    "addon": addon,
-                                    "total": total,
-                                    "cgst_sgst": cgst_sgst,
-                                    "grandtotal": grandtotal,
-                                },
-                            )
-                            options = {"enable-local-file-access": ""}
+                                input_file = render_to_string(
+                                    "Invoice/invoice.html",
+                                    {
+                                        "booking": invoice,
+                                        "addon": addon,
+                                        "total": total,
+                                        "cgst_sgst": cgst_sgst,
+                                        "grandtotal": grandtotal,
+                                    },
+                                )
+                                options = {"enable-local-file-access": ""}
 
-                            pdf_data = pdfkit.from_string(
-                                input_file, False, options=options
-                            )
+                                pdf_data = pdfkit.from_string(
+                                    input_file, False
+                                )
 
-                            if pdf_data:
-                                invoice.invoice = pdf_data
-                                invoice.save()
-                                # invoice.save()
-                                print("PDF data saved in invoice successfully.")
+                                if pdf_data:
+                                    invoice.invoice = pdf_data
+                                    invoice.save()
+                                    # invoice.save()
+                                    print("PDF data saved in invoice successfully.")
 
                                 # return Response({'success': True})
-                            # else:
-                            #     pass
+                            else:
+                                pass
                                 # Booking does not exist
                                 # return Response({'Error': False, 'error': 'Invoice already created'})
                     except Exception as e:
@@ -307,45 +305,44 @@ class TaskViewSet(ModelViewSet):
                         bkng_id = Booking.objects.filter(id=booking_id)
                         
                         if booking:
-                        
-                            # invoice = Invoice.objects.filter(booking_id=booking).first()
-                            # if not invoice:
-                            invoice = Invoice.objects.create(booking_id=booking)
-                            bookingprod = BookingProduct.objects.filter(
-                                booking=booking
-                            ).first()
+                            invoice = Invoice.objects.filter(booking_id=booking).first()
+                            if not invoice:
+                                invoice = Invoice.objects.create(booking_id=booking)
+                                bookingprod = BookingProduct.objects.filter(
+                                    booking=booking
+                                ).first()
 
-                            # addon = Addon.objects.filter(booking_prod_id=bookingprod)
+                                # addon = Addon.objects.filter(booking_prod_id=bookingprod)
 
-                            addon = Addon.objects.filter(
-                                booking_prod_id=bookingprod
-                            )
+                                addon = Addon.objects.filter(
+                                    booking_prod_id=bookingprod
+                                )
 
-                            input_file = render_to_string(
-                                "Invoice/invoice.html",
-                                {
-                                    "booking": invoice,
-                                    "addon": addon,
-                                    "total": total,
-                                    "cgst_sgst": cgst_sgst,
-                                    "grandtotal": grandtotal,
-                                },
-                            )
-                            options = {"enable-local-file-access": ""}
+                                input_file = render_to_string(
+                                    "Invoice/invoice.html",
+                                    {
+                                        "booking": invoice,
+                                        "addon": addon,
+                                        "total": total,
+                                        "cgst_sgst": cgst_sgst,
+                                        "grandtotal": grandtotal,
+                                    },
+                                )
+                                options = {"enable-local-file-access": ""}
 
-                            pdf_data = pdfkit.from_string(
-                                input_file, False, options=options
-                            )
+                                pdf_data = pdfkit.from_string(
+                                    input_file, False, options=options
+                                )
 
-                            if pdf_data:
-                                invoice.invoice = pdf_data
-                                invoice.save()
-                                # invoice.save()
-                                print("PDF data saved in invoice successfully.")
+                                if pdf_data:
+                                    invoice.invoice = pdf_data
+                                    invoice.save()
+                                    # invoice.save()
+                                    print("PDF data saved in invoice successfully.")
 
                                 # return Response({'success': True})
-                            # else:
-                            #     pass
+                            else:
+                                pass
                                 # Booking does not exist
                                 # return Response({'Error': False, 'error': 'Invoice already created'})
                     except Exception as e:
