@@ -123,6 +123,7 @@ class TaskViewSet(ModelViewSet):
                 booking = Booking.objects.get(id=booking_id)
                 task = Task.objects.get(booking=booking)
                 booking.status = status
+                booking.save()
                
                
                 # return Response({'success': True})
