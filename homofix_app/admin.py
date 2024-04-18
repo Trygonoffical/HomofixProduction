@@ -128,6 +128,7 @@ class SupportAdmin(admin.ModelAdmin):
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display=['id','address','mobile','city']
+    search_fields = ["mobile"]
 
 
 @admin.register(Category)
