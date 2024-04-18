@@ -1202,107 +1202,26 @@ class CustomerLoginViewSet(CreateAPIView):
         return Response({'message': 'OTP is sent to your mobile number','otp_session':ottt}, status=status.HTTP_200_OK)
   
         
-# class CustomerLoginAPI(APIView):
-#     def post(self,request):
-#         try:
-#             data = request.data
-            
-#             serializer = LoginCustomrSerializers(data = data)
-#             if serializer.is_valid():
-#                 password = serializer.data['phone_number']
-                
-#                 if Customer.objects.filter(mobile=password).exists():
-#                     cus = Customer.objects.get(mobile=password)
-#                     username = cus.admin.username
-                    
-
-#                     user = authenticate(password=password,username=username)
-#                     if user is None:
-#                         return Response({
-#                         'status':400,
-#                         'message':'Invalid Password',
-#                         'data':{}
-#                         })
-
-#                     user_type = user.user_type
-#                     if user_type == '4':
-#                         user_data = {
-#                             'id': user.customer.id,
-#                             'mobile': user.customer.mobile,
-#                             'message':'Login Success'
-#                             # 'username': user.username,
-                            
-#                             # Add any other user fields you want to return
-#                     }
-#                     refresh = RefreshToken.for_user(user)
-
-#                     return Response({
-#                         # 'refresh': str(refresh),
-#                         'token': str(refresh.access_token),
-#                         'Customer': user_data
-#                     })
-#                 else:
-#                     last_three_digits = password[-3:]
-#                     userr = "user"
-                    
-#                     user = CustomUser.objects.create(username=userr+last_three_digits, user_type='4')    
-#                     user.set_password(password)
-#                     user.customer.mobile = password
-#                     user.save()
-                    
-
-#                     custm = Customer.objects.get(mobile=password)
-#                     usernme = custm.admin.username
-                   
-#                     usrr=authenticate(request,username=usernme, password = password)
-#                     if usrr is None:
-#                         return Response({
-#                         'status':400,
-#                         'message':'Invalid Password',
-#                         'data':{}
-#                         })
-#                     user_type = user.user_type
-#                     if user_type == '4':
-#                         user_data = {
-#                             'id': user.customer.id,
-#                             'username': user.username,
-                            
-#                             # Add any other user fields you want to return
-#                     }
-#                     refresh = RefreshToken.for_user(usrr)
-
-#                     return Response({
-#                         'refresh': str(refresh),
-#                         'access': str(refresh.access_token),
-#                         'user': user_data
-#                     })
-#             return Response({
-#                 'status':400,
-#                 'message':'something went wrong',
-#                 'data':serializer.errors
-#             })
-#         except Exception as e:
-#             print(e)
-
-
-
-
 class CustomerLoginAPI(APIView):
-    def post(self, request):
+    def post(self,request):
         try:
             data = request.data
-            serializer = LoginCustomrSerializers(data=data)
+            
+            serializer = LoginCustomrSerializers(data = data)
             if serializer.is_valid():
                 password = serializer.data['phone_number']
+                
                 if Customer.objects.filter(mobile=password).exists():
                     cus = Customer.objects.get(mobile=password)
                     username = cus.admin.username
-                    user = authenticate(password=password, username=username)
+                    
+
+                    user = authenticate(password=password,username=username)
                     if user is None:
                         return Response({
-                            'status': 400,
-                            'message': 'Invalid Password',
-                            'data': {}
+                        'status':400,
+                        'message':'Invalid Password',
+                        'data':{}
                         })
 
                     user_type = user.user_type
@@ -1310,56 +1229,137 @@ class CustomerLoginAPI(APIView):
                         user_data = {
                             'id': user.customer.id,
                             'mobile': user.customer.mobile,
-                            'message': 'Login Success'
-                        }
-                        refresh = RefreshToken.for_user(user)
+                            'message':'Login Success'
+                            # 'username': user.username,
+                            
+                            # Add any other user fields you want to return
+                    }
+                    refresh = RefreshToken.for_user(user)
 
-                        return Response({
-                            'token': str(refresh.access_token),
-                            'Customer': user_data
-                        })
+                    return Response({
+                        # 'refresh': str(refresh),
+                        'token': str(refresh.access_token),
+                        'Customer': user_data
+                    })
                 else:
                     last_three_digits = password[-3:]
                     userr = "user"
+                    
                     user = CustomUser.objects.create(username=userr+last_three_digits, user_type='4')    
                     user.set_password(password)
                     user.customer.mobile = password
                     user.save()
+                    
+
                     custm = Customer.objects.get(mobile=password)
                     usernme = custm.admin.username
-                    usrr = authenticate(request, username=usernme, password=password)
+                   
+                    usrr=authenticate(request,username=usernme, password = password)
                     if usrr is None:
                         return Response({
-                            'status': 400,
-                            'message': 'Invalid Password',
-                            'data': {}
+                        'status':400,
+                        'message':'Invalid Password',
+                        'data':{}
                         })
                     user_type = user.user_type
                     if user_type == '4':
                         user_data = {
                             'id': user.customer.id,
-                            'username': user.username
-                        }
-                        refresh = RefreshToken.for_user(usrr)
+                            'username': user.username,
+                            
+                            # Add any other user fields you want to return
+                    }
+                    refresh = RefreshToken.for_user(usrr)
 
-                        return Response({
-                            'refresh': str(refresh),
-                            'access': str(refresh.access_token),
-                            'user': user_data
-                        })
-            else:
-                return Response({
-                    'status': 400,
-                    'message': 'Invalid data',
-                    'data': serializer.errors
-                })
+                    return Response({
+                        'refresh': str(refresh),
+                        'access': str(refresh.access_token),
+                        'user': user_data
+                    })
+            return Response({
+                'status':400,
+                'message':'something went wrong',
+                'data':serializer.errors
+            })
         except Exception as e:
             print(e)
-            return Response({
-                'status': 500,
-                'message': 'Internal Server Error',
-                'data': {}
-            })
+
+
+
+
+# class CustomerLoginAPI(APIView):
+#     def post(self, request):
+#         try:
+#             data = request.data
+#             serializer = LoginCustomrSerializers(data=data)
+#             if serializer.is_valid():
+#                 password = serializer.data['phone_number']
+#                 if Customer.objects.filter(mobile=password).exists():
+#                     cus = Customer.objects.get(mobile=password)
+#                     username = cus.admin.username
+#                     user = authenticate(password=password, username=username)
+#                     if user is None:
+#                         return Response({
+#                             'status': 400,
+#                             'message': 'Invalid Password',
+#                             'data': {}
+#                         })
+
+#                     user_type = user.user_type
+#                     if user_type == '4':
+#                         user_data = {
+#                             'id': user.customer.id,
+#                             'mobile': user.customer.mobile,
+#                             'message': 'Login Success'
+#                         }
+#                         refresh = RefreshToken.for_user(user)
+
+#                         return Response({
+#                             'token': str(refresh.access_token),
+#                             'Customer': user_data
+#                         })
+#                 else:
+#                     last_three_digits = password[-3:]
+#                     userr = "user"
+#                     user = CustomUser.objects.create(username=userr+last_three_digits, user_type='4')    
+#                     user.set_password(password)
+#                     user.customer.mobile = password
+#                     user.save()
+#                     custm = Customer.objects.get(mobile=password)
+#                     usernme = custm.admin.username
+#                     usrr = authenticate(request, username=usernme, password=password)
+#                     if usrr is None:
+#                         return Response({
+#                             'status': 400,
+#                             'message': 'Invalid Password',
+#                             'data': {}
+#                         })
+#                     user_type = user.user_type
+#                     if user_type == '4':
+#                         user_data = {
+#                             'id': user.customer.id,
+#                             'username': user.username
+#                         }
+#                         refresh = RefreshToken.for_user(usrr)
+
+#                         return Response({
+#                             'refresh': str(refresh),
+#                             'access': str(refresh.access_token),
+#                             'user': user_data
+#                         })
+#             else:
+#                 return Response({
+#                     'status': 400,
+#                     'message': 'Invalid data',
+#                     'data': serializer.errors
+#                 })
+#         except Exception as e:
+#             print(e)
+#             return Response({
+#                 'status': 500,
+#                 'message': 'Internal Server Error',
+#                 'data': {}
+#             })
 
 # -------------------------------- feedback --------------------------
 
