@@ -54,6 +54,7 @@ class TechnicianAdmin(admin.ModelAdmin):
 @admin.register(CustomUser)
 class CustomerAdmin(admin.ModelAdmin):
     list_display=['id','username']
+    search_fields = ["username"]
 
 @admin.register(BookingProduct)
 class BookingProductAdmin(admin.ModelAdmin):
