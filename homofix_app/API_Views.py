@@ -1242,7 +1242,7 @@ class CustomerLoginAPI(APIView):
                         'Customer': user_data
                     })
                 else:
-                    last_three_digits = password[-3:]
+                    last_three_digits = password[-4:]
                     userr = "user"
                     
                     user = CustomUser.objects.create(username=userr+last_three_digits, user_type='4')    
