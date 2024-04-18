@@ -1245,7 +1245,7 @@ class CustomerLoginAPI(APIView):
                     last_three_digits = password[-3:]
                     userr = "user"
                     
-                    user = CustomUser.objects.create(username=password, user_type='4')    
+                    user = CustomUser.objects.create(username=userr+last_three_digits, user_type='4')    
                     user.set_password(password)
                     user.customer.mobile = password
                     user.save()
@@ -1690,9 +1690,10 @@ class CustomerLogin(APIView):
                 
                         # return Response({'message': 'Logged in successfully.','user': user_data}, status=status.HTTP_200_OK)
             else:
+                print("nooooo")
                 last_three_digits = phone_number[-3:]
                 userr = "user"
-                user = CustomUser.objects.create(username=userr+last_three_digits, user_type='4')    
+                user = CustomUser.objects.create(username=phone_number, user_type='4')    
                 user.set_password(phone_number)
                 user.customer.mobile = phone_number
                 user.save()
