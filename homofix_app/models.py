@@ -224,11 +224,11 @@ class Technician(models.Model):
 
 class Customer(models.Model):
     admin=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=1000)
     mobile = models.CharField(max_length=50)
     city = models.CharField(max_length=50,null=True,blank=True)
     state = models.CharField(max_length=100,null=True,blank=True,choices=STATE_CHOICES)
-    area = models.CharField(max_length=50,null=True,blank=True)
+    area = models.CharField(max_length=1000,null=True,blank=True)
     zipcode = models.IntegerField(null=True,blank=True)
     date = models.DateField(auto_now_add=True,null=True,blank=True)
     
@@ -409,11 +409,11 @@ class Booking(models.Model):
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings_used_coupon')
     New_payment = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     booking_customer = models.CharField(max_length=100,null=True)
-    booking_address = models.CharField(max_length=100,null=True)
+    booking_address = models.CharField(max_length=1000,null=True)
     mobile = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=100, null=True)
     state = models.CharField(max_length=100, null=True)
-    area = models.CharField(max_length=100, null=True)
+    area = models.CharField(max_length=1000, null=True)
     zipcode = models.CharField(max_length=100, null=True)
     
     
