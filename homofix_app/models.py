@@ -426,11 +426,11 @@ class Booking(models.Model):
             year_month = today.strftime('%Y%m')
             last_order = Booking.objects.filter(order_id__startswith=year_month).order_by('-id').first()
             if last_order:
-                last_id = int(last_order.order_id[-3:])
+                last_id = int(last_order.order_id[-4:])
             else:
                 last_id = 0
             new_id = last_id + 1
-            self.order_id = f'{year_month}{new_id:03}'
+            self.order_id = f'{year_month}{new_id:04}'
         super().save(*args, **kwargs)
     @property
     def total_amount(self):
