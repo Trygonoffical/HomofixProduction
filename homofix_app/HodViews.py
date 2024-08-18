@@ -1881,17 +1881,26 @@ def Listofrebooking(request):
 
 
 
-def admin_booking_complete(request):
+# def admin_booking_complete(request):
     
    
-    task = Task.objects.filter(booking__status = "Completed").order_by("-id")
-    context = {
-        'task':task,
+#     task = Task.objects.filter(booking__status = "Completed").order_by("-id")
+#     context = {
+#         'task':task,
         
         
-    }
-    return render(request,'homofix_app/AdminDashboard/Rebooking/booking_complete.html',context)    
+#     }
+#     return render(request,'homofix_app/AdminDashboard/Rebooking/booking_complete.html',context)    
 
+
+def admin_booking_complete(request):
+    task = Task.objects.filter(booking__status="Completed") \
+                       .select_related('booking', 'technician', 'supported_by') \
+                       .order_by("-id")
+    context = {
+        'task': task,
+    }
+    return render(request, 'homofix_app/AdminDashboard/Rebooking/booking_complete.html', context)
 
 def admin_rebooking(request, task_id):
     
