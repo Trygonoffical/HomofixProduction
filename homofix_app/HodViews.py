@@ -1892,20 +1892,16 @@ def Listofrebooking(request):
 #     }
 #     return render(request,'homofix_app/AdminDashboard/Rebooking/booking_complete.html',context)    
 
-
-from django.core.cache import cache
-
 def admin_booking_complete(request):
-    task = cache.get('completed_tasks')
-    if not task:
-        task = Task.objects.filter(booking__status="Completed") \
-                           .select_related('booking', 'technician', 'supported_by') \
-                           .order_by("-id")
-        cache.set('completed_tasks', task, timeout=60*5)  # Cache for 5 minutes
+    task = Task.objects.filter(booking__status="Completed") \
+                       .select_related('booking', 'technician', 'supported_by') \
+                       .defer('description') \
+                       .order_by("-id")
     context = {
         'task': task,
     }
     return render(request, 'homofix_app/AdminDashboard/Rebooking/booking_complete.html', context)
+
 
 def admin_rebooking(request, task_id):
     
