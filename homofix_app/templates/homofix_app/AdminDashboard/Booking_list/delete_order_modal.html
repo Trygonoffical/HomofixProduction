@@ -1,7 +1,10 @@
 <div class="modal fade" id="exampleDangerModal{{booking.id}}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
+<<<<<<< HEAD
         <form action="{% url "cancel_booking_byadmin" booking.id %}" method="POST">
             {% csrf_token %}
+=======
+>>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
         <div class="modal-content bg-dark">
             <div class="modal-header">
                 <h5 class="modal-title text-white">ORDER CANCEL</h5>
@@ -10,7 +13,10 @@
             </div>
             <div class="modal-body text-white">
                 <p>Do You Want to Cancel Order ?</p>
+<<<<<<< HEAD
                 <input type="text" class="form-control" placeholder="write a reason...", name="cancel_reason" required>
+=======
+>>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
                 
                 {% comment %} <h1 class="text-info">Do You Want to Delete ?</h1> {% endcomment %}
 
@@ -18,11 +24,18 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light"
                     data-bs-dismiss="modal">No</button>
+<<<<<<< HEAD
                 {% comment %} <a class="btn btn-primary" href="{% url 'cancel_booking_byadmin' booking.id %}">Yes</a> {% endcomment %}
                 <button type="submit" class="btn btn-primary">Yes</button>
                 
             </div>
         </div>
     </form>
+=======
+                <a class="btn btn-primary" href="{% url 'cancel_booking_byadmin' booking.id %}">Yes</a>
+                
+            </div>
+        </div>
+>>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
     </div>
 </div>

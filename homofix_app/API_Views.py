@@ -420,14 +420,20 @@ class TaskViewSet(ModelViewSet):
     def put(self, request):
         booking_id = request.data.get("booking_id")
         print("bookinggggg idddd",booking_id)
+<<<<<<< HEAD
         
+=======
+>>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
         status = request.data.get("status")
         if booking_id and status:
             print(booking_id)
             try:
                 booking = Booking.objects.get(id=booking_id)
+<<<<<<< HEAD
                 if booking.status == "Completed":
                     return Response({"success": False, "message": "Booking already processed."})
+=======
+>>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
                 task = Task.objects.get(booking=booking)
                 booking.status = status
                 booking.save()
