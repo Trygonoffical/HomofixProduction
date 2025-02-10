@@ -3212,19 +3212,12 @@ def page_legal_list(request):
         'customer_count':customer_count,
         'pagelegal':pagelegal,
         'entry_count': entry_count,
-<<<<<<< HEAD
         
-=======
->>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
     }
     return render(request, 'homofix_app/AdminDashboard/PageLegal/page_legal_list.html', context)
 
 def add_page_legal(request):
-<<<<<<< HEAD
     subcategory = SubCategory.objects.all()
-=======
-
->>>>>>> 68b34ff3b96b381724a5b47ccb9fcf4055f10223
     new_expert_count = Technician.objects.filter(status="New").count()
     booking_count = Booking.objects.filter(status = "New").count()
     booking_complete = Booking.objects.filter(status = "Completed").count()
