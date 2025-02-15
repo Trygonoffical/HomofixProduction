@@ -34,6 +34,7 @@ import pdfkit
 from django.template.loader import render_to_string
 from django.db.models import Avg
 import requests
+from django.utils import timezone
 
 # def all_location(request):
 #     all_location = AllTechnicianLocation.objects.all()
@@ -1822,7 +1823,7 @@ def admin_reschedule(request):
 
         booking_id=request.POST.get('booking_id')
         booking_date_str = request.POST.get('booking_date')
-        booking_date = timezone.make_aware(datetime.datetime.fromisoformat(booking_date_str))
+        booking_date = make_aware(datetime.fromisoformat(booking_date_str))
         print("booking date",booking_date)
         booking = Booking.objects.get(id=booking_id)
         booking.booking_date = booking_date
@@ -3522,3 +3523,39 @@ def upload_image(request):
         })  # CKEditor requires this JSON format
 
     return JsonResponse({'uploaded': 0, 'error': {'message': 'Invalid request'}}, status=400)
+
+
+import pandas as pd
+def export_to_excel(request):
+    booking_id = request.GET.get('booking_id', '')  # Agar search filter hai toh apply karein
+
+    # Filtered data jo table me dikh raha hai, wahi export hoga
+    task_list = Task.objects.filter(booking__status="Completed") \
+                            .select_related('booking', 'technician', 'supported_by') \
+                            .defer('description') \
+                            .order_by("-id")
+
+    if booking_id:
+        task_list = task_list.filter(booking__order_id__icontains=booking_id)
+
+    # Data ko Pandas DataFrame me convert karein
+    data = []
+    for task in task_list:
+        data.append({
+            "Booking ID": task.booking.order_id,
+            "Customer Name": task.booking.customer.admin.first_name,
+            # "Technician": task.technician.name if task.technician else "N/A",
+            # "Status": task.booking.status,
+            # "Date": task.booking.date_created.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+
+    df = pd.DataFrame(data)
+
+    # Excel file ka response create karein
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=Booking_Data.xlsx'
+    df.to_excel(response, index=False, engine='openpyxl')
+    
+    return response
+
+

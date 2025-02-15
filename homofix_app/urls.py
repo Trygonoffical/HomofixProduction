@@ -215,6 +215,8 @@ urlpatterns = [
 
     path('upload/', HodViews.upload_image, name='ckeditor_upload'),
 
+    path('export-excel/', HodViews.export_to_excel, name='export_to_excel'),
+
 
     
 
