@@ -2117,23 +2117,55 @@ def Listofrebooking(request):
 #     }
 #     return render(request,'homofix_app/AdminDashboard/Rebooking/booking_complete.html',context)    
 
-def admin_booking_complete(request):
-    task = Task.objects.filter(booking__status="Completed") \
-                       .select_related('booking', 'technician', 'supported_by') \
-                       .defer('description') \
-                       .order_by("-id")
-    invoices = Invoice.objects.filter(booking_id__in=[t.booking.id for t in task])  
-    addon = Addon.objects.filter(booking_prod_id__booking__in=[b.booking.id for b in task])
+
+# def admin_booking_complete(request):
+#     task = Task.objects.filter(booking__status="Completed") \
+#                        .select_related('booking', 'technician', 'supported_by') \
+#                        .defer('description') \
+#                        .order_by("-id")
+#     invoices = Invoice.objects.filter(booking_id__in=[t.booking.id for t in task])  
+#     addon = Addon.objects.filter(booking_prod_id__booking__in=[b.booking.id for b in task])
     
 
 
         
-    # print("addonssss",addon)
+#     # print("addonssss",addon)
    
+#     context = {
+#         'task': task,
+#         'invoices': invoices,
+#         'addons': addon, 
+#     }
+#     return render(request, 'homofix_app/AdminDashboard/Rebooking/booking_complete.html', context)
+
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
+def admin_booking_complete(request):
+    booking_id = request.GET.get('booking_id', '')  # Search input ka value le rahe hain
+
+    # By default sabhi completed bookings fetch karo
+    task_list = Task.objects.filter(booking__status="Completed") \
+                            .select_related('booking', 'technician', 'supported_by') \
+                            .defer('description') \
+                            .order_by("-id")
+
+    # Agar booking_id diya gaya hai toh filter karein
+    if booking_id:
+        task_list = task_list.filter(booking__order_id__icontains=booking_id)
+
+    paginator = Paginator(task_list, 10)  # 10 items per page
+    page_number = request.GET.get('page')
+    tasks = paginator.get_page(page_number)
+
+    invoices = Invoice.objects.filter(booking_id__in=[t.booking.id for t in tasks])
+    addon = Addon.objects.filter(booking_prod_id__booking__in=[b.booking.id for b in tasks])
+
     context = {
-        'task': task,
+        'task': tasks,
         'invoices': invoices,
-        'addons': addon, 
+        'addons': addon,
+        'search_query': booking_id,  # Taki input field me search value rahe
     }
     return render(request, 'homofix_app/AdminDashboard/Rebooking/booking_complete.html', context)
 
