@@ -3249,35 +3249,86 @@ def page_legal_list(request):
     }
     return render(request, 'homofix_app/AdminDashboard/PageLegal/page_legal_list.html', context)
 
+# def add_page_legal(request):
+#     subcategory = SubCategory.objects.all()
+#     new_expert_count = Technician.objects.filter(status="New").count()
+#     booking_count = Booking.objects.filter(status = "New").count()
+#     booking_complete = Booking.objects.filter(status = "Completed").count()
+#     rebooking_count = Rebooking.objects.all().count()
+#     customer_count = Customer.objects.all().count()
+#     if request.method == "POST":
+#         title = request.POST.get('title')
+#         content = request.POST.get('content')
+#         subcategory_id = request.POST.get('subcategory_id')
+#         home = request.POST.get('home')== 'on'
+#         can_contact = request.POST.get('can_contact')== 'on'
+#         subcat = None
+#         if subcategory_id:
+
+#             subcat = SubCategory.objects.get(id=subcategory_id)
+#             print(f"subcategory {subcategory_id} contact {can_contact} home {home}")
+#         legal_page = LegalPage.objects.create(title=title,content=content,subcategory=subcat,home=home,contact=can_contact )
+       
+#         legal_page.save()
+#         messages.success(request,'Legal Page Add Successfully')
+#         return redirect('page_legal_list')
+
+#     context = {
+#         'new_expert_count':new_expert_count,
+#         'booking_count':booking_count,
+#         'booking_complete':booking_complete,
+#         'rebooking_count':rebooking_count,
+#         'customer_count':customer_count,
+#         'subcategory':subcategory,
+        
+#     }
+
+#     return render(request, 'homofix_app/AdminDashboard/PageLegal/add_page_legal.html', context)
+
+
 def add_page_legal(request):
     subcategory = SubCategory.objects.all()
     new_expert_count = Technician.objects.filter(status="New").count()
-    booking_count = Booking.objects.filter(status = "New").count()
-    booking_complete = Booking.objects.filter(status = "Completed").count()
+    booking_count = Booking.objects.filter(status="New").count()
+    booking_complete = Booking.objects.filter(status="Completed").count()
     rebooking_count = Rebooking.objects.all().count()
     customer_count = Customer.objects.all().count()
+    
     if request.method == "POST":
         title = request.POST.get('title')
         content = request.POST.get('content')
         subcategory_id = request.POST.get('subcategory_id')
-        home = request.POST.get('home')== 'on'
-        can_contact = request.POST.get('can_contact')== 'on'
-        subcat = SubCategory.objects.get(id=subcategory_id)
-        print(f"subcategory {subcategory_id} contact {can_contact} home {home}")
-        legal_page = LegalPage.objects.create(title=title,content=content,subcategory=subcat,home=home,contact=can_contact )
-       
-        legal_page.save()
-        messages.success(request,'Legal Page Add Successfully')
+        home = request.POST.get('home') == 'on'
+        can_contact = request.POST.get('can_contact') == 'on'
+
+        subcat = None  # Default value set kar diya
+
+        if subcategory_id:
+            try:
+                subcat = SubCategory.objects.get(id=subcategory_id)
+                print(f"subcategory {subcategory_id} contact {can_contact} home {home}")
+            except SubCategory.DoesNotExist:
+                messages.error(request, "Invalid subcategory selected.")
+                return redirect('page_legal_list')
+
+        legal_page = LegalPage.objects.create(
+            title=title,
+            content=content,
+            subcategory=subcat,
+            home=home,
+            contact=can_contact
+        )
+
+        messages.success(request, 'Legal Page Added Successfully')
         return redirect('page_legal_list')
 
     context = {
-        'new_expert_count':new_expert_count,
-        'booking_count':booking_count,
-        'booking_complete':booking_complete,
-        'rebooking_count':rebooking_count,
-        'customer_count':customer_count,
-        'subcategory':subcategory,
-        
+        'new_expert_count': new_expert_count,
+        'booking_count': booking_count,
+        'booking_complete': booking_complete,
+        'rebooking_count': rebooking_count,
+        'customer_count': customer_count,
+        'subcategory': subcategory,
     }
 
     return render(request, 'homofix_app/AdminDashboard/PageLegal/add_page_legal.html', context)
