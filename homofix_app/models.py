@@ -892,7 +892,7 @@ class MostViewed(models.Model):
     
 
 class HomePageService(models.Model):
-    category_id = models.ForeignKey(Category,on_delete=models.CASCADE)
+    category_id = models.ForeignKey(Category,on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=100)
     
 

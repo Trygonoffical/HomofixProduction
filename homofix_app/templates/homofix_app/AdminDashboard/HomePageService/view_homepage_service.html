@@ -29,7 +29,7 @@
 	{% include 'homofix_app/Base/messages.html' %}
 	{% comment %} <div class="ms-auto mt-2 mb-2" data-bs-toggle="modal" data-bs-target="#exampleVerticallycenteredModal"><a href="javascript:;" class="btn btn-light  mt-2 mt-lg-0"><i class="bx bxs-plus-square" ></i>New Technician</a></div> {% endcomment %}
 	{% comment %} <div class="ms-auto mt-2 mb-2" ><a href="{% url 'add_blog' %}" class="btn btn-light  mt-2 mt-lg-0"><i class="bx bxs-plus-square" ></i>New Blog</a></div> {% endcomment %}
-    {% if not home_page_Service %}
+    {% comment %} {% if not home_page_Service %} {% endcomment %}
     <div class="ms-auto mt-2 mb-2" ><a href="{% url 'add_homepage_service' %}" class="btn btn-light  mt-2 mt-lg-0"><i class="bx bxs-plus-square" ></i>New Home Page Service</a></div>
     {% endif %}
 

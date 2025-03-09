@@ -3541,9 +3541,12 @@ def export_to_excel(request):
     # Data ko Pandas DataFrame me convert karein
     data = []
     for task in task_list:
+        product = task.booking.products.first()
+        category_name = product.subcategory.Category_id.category_name if product else "N/A"
         data.append({
             "Booking ID": task.booking.order_id,
             "Customer Name": task.booking.customer.admin.first_name,
+            "Category": category_name,
             # "Technician": task.technician.name if task.technician else "N/A",
             # "Status": task.booking.status,
             # "Date": task.booking.date_created.strftime("%Y-%m-%d %H:%M:%S"),
