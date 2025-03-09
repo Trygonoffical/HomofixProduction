@@ -529,6 +529,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 
+class LegalPageSerializer(serializers.ModelSerializer):
+   
+    
+    class Meta:
+        model = LegalPage
+        fields = "__all__"
+
 # ----------------------------- Sub-Category ------------------- 
 
 class ProductfilterSerializer(serializers.ModelSerializer):
@@ -541,10 +548,11 @@ class ProductfilterSerializer(serializers.ModelSerializer):
 class SubcategorySerializer(serializers.ModelSerializer):
     Category_name = serializers.CharField(source='Category_id.category_name', read_only=True)    
     products = ProductfilterSerializer(source='product_set', many=True)
+    legal_pages = LegalPageSerializer(source='legalpage_set', many=True, read_only=True)  # 👈 LegalPage data add kiya
 
     class Meta:
         model = SubCategory
-        fields = ['id','subcategory_image','name','Category_id','Category_name','products']
+        fields = ['id','subcategory_image','name','Category_id','Category_name','products','legal_pages']
         
 
 
@@ -779,13 +787,6 @@ class BkingSerializer(serializers.ModelSerializer):
 
    
 # ------------------------ Legal Page --------------- 
-
-class LegalPageSerializer(serializers.ModelSerializer):
-   
-    
-    class Meta:
-        model = LegalPage
-        fields = "__all__"
 
 
 
