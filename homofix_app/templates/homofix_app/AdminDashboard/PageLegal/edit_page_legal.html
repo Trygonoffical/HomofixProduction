@@ -48,7 +48,9 @@
                            
                            <div>
                               <label for="inputemail" class="form-label">Sub-category</label>
-                              <select name="subcategory_id" id="" class="form-control bg-dark" required>
+                              <select name="subcategory_id" id="" class="form-control bg-dark" >
+                                 <option value="">Select</option>
+
                                 
                                  {% for i in subcategory %}
                                  <option value="{{i.id}}" {% if i.id == legalpage.subcategory_id %}selected{% endif %}>{{i.name}}</option>

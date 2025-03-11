@@ -3335,6 +3335,7 @@ def add_page_legal(request):
 
 
 def edit_page_legal(request,id):
+
     subcategory = SubCategory.objects.all()
     legalpage = LegalPage.objects.get(id=id)
     new_expert_count = Technician.objects.filter(status="New").count()
@@ -3359,19 +3360,67 @@ def edit_page_legal(request,id):
     return render(request, 'homofix_app/AdminDashboard/PageLegal/edit_page_legal.html', context)
 
 
+# def update_page_legal_save(request):
+#     if request.method == "POST":
+#         print("ehlooooo")
+#         legal_page_id = request.POST.get('legalpage_id')    
+#         title = request.POST.get('title')    
+#         content = request.POST.get('content')
+        
+#         subcategory_id = request.POST.get('subcategory_id')
+
+#         home = request.POST.get('home')== 'on'
+#         can_contact = request.POST.get('can_contact')== 'on'
+#         if subcategory_id:
+#             subcat = SubCategory.objects.get(id=int(subcategory_id))
+#         else:
+#             subcat = None
+#         subcat = SubCategory.objects.get(id=subcategory_id)    
+
+#         legalpage = LegalPage.objects.get(id=legal_page_id)
+#         legalpage.title = title
+#         legalpage.content = content
+#         legalpage.home = home
+#         legalpage.contact = can_contact
+#         legalpage.subcategory = subcat
+#         legalpage.save()
+
+#         print("id",legal_page_id,"title",title,'content',content,"subcategory",subcat,"home",home,"contact",can_contact)
+#         messages.success(request,'Page Legal Updtaed Successfully')
+#         return redirect('page_legal_list')
+
+
+
 def update_page_legal_save(request):
     if request.method == "POST":
         print("ehlooooo")
+        
         legal_page_id = request.POST.get('legalpage_id')    
         title = request.POST.get('title')    
-        content = request.POST.get('content')
-        
+        content = request.POST.get('content')        
         subcategory_id = request.POST.get('subcategory_id')
-        home = request.POST.get('home')== 'on'
-        can_contact = request.POST.get('can_contact')== 'on'
-        subcat = SubCategory.objects.get(id=subcategory_id)    
 
-        legalpage = LegalPage.objects.get(id=legal_page_id)
+        home = request.POST.get('home') == 'on'
+        can_contact = request.POST.get('can_contact') == 'on'
+
+        # Validate legal_page_id
+        if not legal_page_id:
+            messages.error(request, "Invalid Legal Page ID")
+            return redirect('page_legal_list')
+
+        # Get LegalPage or return 404
+        legalpage = get_object_or_404(LegalPage, id=int(legal_page_id))
+
+        # Get SubCategory if exists, otherwise set None
+        subcat = None
+        if subcategory_id:
+            try:
+                subcat = SubCategory.objects.get(id=int(subcategory_id))
+            except SubCategory.DoesNotExist:
+                messages.error(request, "Selected Subcategory does not exist")
+                return redirect('page_legal_list')
+
+        # Update LegalPage
         legalpage.title = title
         legalpage.content = content
         legalpage.home = home
@@ -3379,10 +3428,14 @@ def update_page_legal_save(request):
         legalpage.subcategory = subcat
         legalpage.save()
 
-        print("id",legal_page_id,"title",title,'content',content,"subcategory",subcat,"home",home,"contact",can_contact)
-        messages.success(request,'Page Legal Updtaed Successfully')
+        print("id", legal_page_id, "title", title, 'content', content, "subcategory", subcat, "home", home, "contact", can_contact)
+        
+        messages.success(request, 'Page Legal Updated Successfully')
         return redirect('page_legal_list')
 
+    else:
+        messages.error(request, "Invalid request method")
+        return redirect('page_legal_list')
 
 
 def delete_page_legal(request,id):
