@@ -33,14 +33,14 @@
         <div class="card-body">
             <div class="mb-3 col-4">
                 <form method="GET">
-                    <input type="text" name="booking_id" id="searchBookingId" class="form-control" placeholder="Search by Booking ID" value="{{ search_query }}">
+                    <input type="text" name="booking_id" id="searchBookingId" class="form-control" placeholder="Search by Booking ID/Mobile" value="{{ search_query }}">
                     <button type="submit" class="btn btn-primary mt-2">Search</button>
                 </form>
 
-                 {% comment %} <form method="GET" action="{% url 'export_to_excel' %}">
+                  <form method="GET" action="{% url 'export_to_excel' %}">
                     <input type="hidden" name="booking_id" value="{{ search_query }}">
                     <button type="submit" class="btn btn-success mt-2">Export to Excel</button>
-                </form>  {% endcomment %}
+                </form> 
             </div>
             <div class="table-responsive">
                 <table  class=" table  mb-0">

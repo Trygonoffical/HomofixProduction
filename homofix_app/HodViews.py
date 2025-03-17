@@ -2153,7 +2153,10 @@ def admin_booking_complete(request):
 
     # Agar booking_id diya gaya hai toh filter karein
     if booking_id:
-        task_list = task_list.filter(booking__order_id__icontains=booking_id)
+        # task_list = task_list.filter(booking__order_id__icontains=booking_id,booking__customer__mobile__icontains=booking_id)
+        task_list = task_list.filter(
+            Q(booking__order_id__icontains=booking_id) | Q(booking__customer__mobile__icontains=booking_id)
+        )
 
     paginator = Paginator(task_list, 10)  # 10 items per page
     page_number = request.GET.get('page')
@@ -3630,6 +3633,7 @@ def upload_image(request):
 
 
 import pandas as pd
+from django.utils.timezone import localtime
 def export_to_excel(request):
     booking_id = request.GET.get('booking_id', '')  # Agar search filter hai toh apply karein
 
@@ -3647,10 +3651,35 @@ def export_to_excel(request):
     for task in task_list:
         product = task.booking.products.first()
         category_name = product.subcategory.Category_id.category_name if product else "N/A"
+        subcategory_name = product.subcategory.name if product else "N/A"
+        product_name = product.name if product else "N/A"
+        customer_name = f"{task.booking.customer.admin.first_name} {task.booking.customer.admin.last_name}" if task.booking.customer.admin else "N/A"
+        mobile_no = task.booking.customer.mobile  if task.booking.customer.mobile else "N/A"
+        city = task.booking.customer.city  if task.booking.customer.city else "N/A"
+        state = task.booking.customer.state  if task.booking.customer.state else "N/A"
+        area = task.booking.customer.area  if task.booking.customer.area else "N/A"
+        zipcode = task.booking.customer.zipcode  if task.booking.customer.zipcode else "N/A"
+        gst_no = task.booking.customer.gst_no  if task.booking.customer.gst_no else "N/A"
+        total = task.booking.final_amount  if task.booking.final_amount else "N/A"
+        booking_date = localtime(task.booking.booking_date).replace(tzinfo=None) if task.booking.booking_date else "N/A"
+        expert_by = task.technician.admin.username  if task.technician.admin.username else "N/A"
+         
         data.append({
             "Booking ID": task.booking.order_id,
             "Customer Name": task.booking.customer.admin.first_name,
             "Category": category_name,
+            "Subcategory": subcategory_name,
+            "Product": product_name,
+            "Customer": customer_name,
+            "Mobile": mobile_no,
+            "City": city,
+            "State": state,
+            "Area": area,
+            "Zipcode": zipcode,
+            "GST No": gst_no,
+            "Total": total,
+            "Booking Date": booking_date,
+            "Expert By": expert_by,
             # "Technician": task.technician.name if task.technician else "N/A",
             # "Status": task.booking.status,
             # "Date": task.booking.date_created.strftime("%Y-%m-%d %H:%M:%S"),
