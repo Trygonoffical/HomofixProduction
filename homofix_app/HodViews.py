@@ -1929,9 +1929,10 @@ def list_of_task(request):
     if search_query:
         task = task.filter(
             technician__admin__username__icontains=search_query  # Search by technician's name
-        ) | task.filter(
-            technician__number__icontains=search_query  # Or search by technician's number
-        )
+        ) | task.filter(booking__order_id__icontains=search_query) | task.filter(booking__customer__mobile__icontains=search_query)
+        #| task.filter(
+            #technician__number__icontains=search_query  # Or search by technician's number
+        #)
 
     # Paginate the task list
     paginator = Paginator(task, 10)  # Show 10 tasks per page
