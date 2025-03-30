@@ -1896,24 +1896,63 @@ def task_assign(request):
 #     return render(request,'homofix_app/AdminDashboard/Booking_list/task.html',context)    
 
 
-def list_of_task(request):
-    # task = Task.objects.filter(booking__status="Assign").order_by("-created_at")
-    task = Task.objects.filter(booking__status__in=["Assign", "Inprocess", "Reached", "Proceed"]).order_by("-created_at")
-    tech = Technician.objects.all()
+# def list_of_task(request):
+#     # task = Task.objects.filter(booking__status="Assign").order_by("-created_at")
+#     task = Task.objects.filter(booking__status__in=["Assign", "Inprocess", "Reached", "Proceed"]).order_by("-created_at")
+#     tech = Technician.objects.all()
     
+#     new_expert_count = Technician.objects.filter(status="New").count()
+#     booking_count = Booking.objects.filter(status="New").count()
+#     rebooking_count = Rebooking.objects.all().count()
+#     customer_count = Customer.objects.all().count()
+
+    
+#     context = {
+#         'task': task,
+#         'new_expert_count': new_expert_count,
+#         'booking_count': booking_count,
+#         'rebooking_count': rebooking_count,
+#         'customer_count': customer_count,
+#         'tech': tech
+#     }
+
+#     return render(request, 'homofix_app/AdminDashboard/Booking_list/task.html', context)
+
+def list_of_task(request):
+    # Get the search query for technician's name or number
+    search_query = request.GET.get('search', '')  # Get the search term from the URL
+
+    # Filter tasks based on the status
+    task = Task.objects.filter(booking__status__in=["Assign", "Inprocess", "Reached", "Proceed"]).order_by("-created_at")
+    
+    # Filter tasks by technician name or number if a search query exists
+    if search_query:
+        task = task.filter(
+            technician__admin__username__icontains=search_query  # Search by technician's name
+        ) | task.filter(
+            technician__number__icontains=search_query  # Or search by technician's number
+        )
+
+    # Paginate the task list
+    paginator = Paginator(task, 10)  # Show 10 tasks per page
+    page_number = request.GET.get('page')  # Get the page number from the URL
+    page_obj = paginator.get_page(page_number)  # Get the page object
+    
+    # Other counts
+    tech = Technician.objects.all()
     new_expert_count = Technician.objects.filter(status="New").count()
     booking_count = Booking.objects.filter(status="New").count()
     rebooking_count = Rebooking.objects.all().count()
     customer_count = Customer.objects.all().count()
 
-    
     context = {
-        'task': task,
+        'task': page_obj,  # Pass the page object to the template
         'new_expert_count': new_expert_count,
         'booking_count': booking_count,
         'rebooking_count': rebooking_count,
         'customer_count': customer_count,
-        'tech': tech
+        'tech': tech,
+        'search_query': search_query  # Pass the search query to the template
     }
 
     return render(request, 'homofix_app/AdminDashboard/Booking_list/task.html', context)
