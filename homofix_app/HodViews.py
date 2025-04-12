@@ -130,7 +130,7 @@ def admin_dashboard(request):
     
 
     # # Fetch existing data
-    # fedback = feedback.objects.all()
+    fedback = feedback.objects.all()
     booking = Booking.objects.filter(status="New").order_by('-id')[:10]
     # new_expert_count = Technician.objects.filter(status="New").count()
     # booking_count = Booking.objects.filter(status="New").count()
@@ -143,6 +143,7 @@ def admin_dashboard(request):
     # total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
     context = {
         'booking': booking,
+        'fedback': fedback,
     }
     return render(request, 'homofix_app/AdminDashboard/dashboard.html',context)
 
