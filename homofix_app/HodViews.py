@@ -95,52 +95,52 @@ from django.utils.timezone import make_aware
 
 def admin_dashboard(request):
     # Current date
-    today = datetime.today()
+    # today = datetime.today()
 
-    # Calculate the first and last day of the previous month
-    # first_day_of_last_month = (today.replace(day=1) - timedelta(days=1)).replace(day=1)
-    # last_day_of_last_month = today.replace(day=1) - timedelta(days=1)
-    first_day_of_last_month = make_aware(datetime(today.year, today.month - 1, 1)) if today.month > 1 else make_aware(datetime(today.year - 1, 12, 1))
-    last_day_of_last_month = make_aware(datetime(today.year, today.month, 1)) - timedelta(seconds=1)
+    # # Calculate the first and last day of the previous month
+    # # first_day_of_last_month = (today.replace(day=1) - timedelta(days=1)).replace(day=1)
+    # # last_day_of_last_month = today.replace(day=1) - timedelta(days=1)
+    # first_day_of_last_month = make_aware(datetime(today.year, today.month - 1, 1)) if today.month > 1 else make_aware(datetime(today.year - 1, 12, 1))
+    # last_day_of_last_month = make_aware(datetime(today.year, today.month, 1)) - timedelta(seconds=1)
 
-    print("first day of last month",first_day_of_last_month)
-    print("Last day of last month",last_day_of_last_month)
+    # print("first day of last month",first_day_of_last_month)
+    # print("Last day of last month",last_day_of_last_month)
 
-    # Filter completed bookings for last month
-    completed_bookings_last_month = Booking.objects.filter(
-        status="Completed",
-        booking_date__gte=first_day_of_last_month,
-        booking_date__lte=last_day_of_last_month
-    )
-    average_completed_bookings = completed_bookings_last_month.aggregate(Avg('id'))['id__avg']
+    # # Filter completed bookings for last month
+    # completed_bookings_last_month = Booking.objects.filter(
+    #     status="Completed",
+    #     booking_date__gte=first_day_of_last_month,
+    #     booking_date__lte=last_day_of_last_month
+    # )
+    # average_completed_bookings = completed_bookings_last_month.aggregate(Avg('id'))['id__avg']
 
 
-    # Group by day and count bookings
-    daily_booking_counts = completed_bookings_last_month.annotate(
-        day=TruncDay('booking_date')
-    ).values('day').annotate(
-        daily_count=Count('id')
-    )
+    # # Group by day and count bookings
+    # daily_booking_counts = completed_bookings_last_month.annotate(
+    #     day=TruncDay('booking_date')
+    # ).values('day').annotate(
+    #     daily_count=Count('id')
+    # )
 
    
-    average_daily_count = int(daily_booking_counts.aggregate(
-    avg_count=Avg('daily_count')
-    )['avg_count'] or 0)
+    # average_daily_count = int(daily_booking_counts.aggregate(
+    # avg_count=Avg('daily_count')
+    # )['avg_count'] or 0)
 
-    print("gggggggggoooooooooo",average_daily_count)
+    # print("gggggggggoooooooooo",average_daily_count)
 
-    # Fetch existing data
-    fedback = feedback.objects.all()
-    booking = Booking.objects.filter(status="New").order_by('-id')[:10]
-    new_expert_count = Technician.objects.filter(status="New").count()
-    booking_count = Booking.objects.filter(status="New").count()
-    booking_complete = Booking.objects.filter(status="Completed").count()
-    rebooking_count = Rebooking.objects.all().count()
-    customer_count = Customer.objects.all().count()
-    total_hod_share = Share.objects.aggregate(Sum('company_share'))['company_share__sum'] or 0
+    # # Fetch existing data
+    # fedback = feedback.objects.all()
+    # booking = Booking.objects.filter(status="New").order_by('-id')[:10]
+    # new_expert_count = Technician.objects.filter(status="New").count()
+    # booking_count = Booking.objects.filter(status="New").count()
+    # booking_complete = Booking.objects.filter(status="Completed").count()
+    # rebooking_count = Rebooking.objects.all().count()
+    # customer_count = Customer.objects.all().count()
+    # total_hod_share = Share.objects.aggregate(Sum('company_share'))['company_share__sum'] or 0
 
-    completed_bookings = Booking.objects.filter(status='Completed')
-    total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
+    # completed_bookings = Booking.objects.filter(status='Completed')
+    # total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
     return render(request, 'homofix_app/AdminDashboard/dashboard.html')
 
     # Render template with additional data for average count
