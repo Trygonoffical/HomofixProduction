@@ -182,6 +182,9 @@ def admin_dashboard(request):
     # Dashboard metrics
     booking_new_qs = Booking.objects.filter(status="New")
     booking_completed_qs = Booking.objects.filter(status="Completed")
+    
+
+    total_gross_amount = sum(booking.final_amount for booking in booking_completed_qs)
 
     context = {
         'booking': booking_new_qs.order_by('-id')[:10],
@@ -192,7 +195,8 @@ def admin_dashboard(request):
         'customer_count': Customer.objects.count(),
         'total_hod_share': Share.objects.aggregate(total=Sum('company_share'))['total'] or 0,
         'average_daily_count': average_daily_count,
-        'total_gross_amount': booking_completed_qs.aggregate(total=Sum('New_payment'))['total'] or 0,
+        'total_gross_amount': total_gross_amount
+        
     }
 
     return render(request, 'homofix_app/AdminDashboard/dashboard.html', context)
