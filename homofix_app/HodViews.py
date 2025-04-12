@@ -127,11 +127,11 @@ def admin_dashboard(request):
     # avg_count=Avg('daily_count')
     # )['avg_count'] or 0)
 
-    # print("gggggggggoooooooooo",average_daily_count)
+    
 
     # # Fetch existing data
     # fedback = feedback.objects.all()
-    # booking = Booking.objects.filter(status="New").order_by('-id')[:10]
+    booking = Booking.objects.filter(status="New").order_by('-id')[:10]
     # new_expert_count = Technician.objects.filter(status="New").count()
     # booking_count = Booking.objects.filter(status="New").count()
     # booking_complete = Booking.objects.filter(status="Completed").count()
@@ -141,7 +141,10 @@ def admin_dashboard(request):
 
     # completed_bookings = Booking.objects.filter(status='Completed')
     # total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
-    return render(request, 'homofix_app/AdminDashboard/dashboard.html')
+    context = {
+        'booking': booking,
+    }
+    return render(request, 'homofix_app/AdminDashboard/dashboard.html',context)
 
     # Render template with additional data for average count
 
