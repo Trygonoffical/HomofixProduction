@@ -141,21 +141,22 @@ def admin_dashboard(request):
 
     completed_bookings = Booking.objects.filter(status='Completed')
     total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
-    
+    return render(request, 'homofix_app/AdminDashboard/dashboard.html')
 
     # Render template with additional data for average count
-    return render(request, 'homofix_app/AdminDashboard/dashboard.html', {
-        'booking_count': booking_count,
-        'new_expert_count': new_expert_count,
-        'rebooking_count': rebooking_count,
-        'customer_count': customer_count,
-        'booking_complete': booking_complete,
-        'total_hod_share': total_hod_share,
-        'booking': booking,
-        'fedback': fedback,
-        'average_daily_count': average_daily_count,
-        'total_gross_amount': total_gross_amount,
-    })
+
+    # return render(request, 'homofix_app/AdminDashboard/dashboard.html', {
+    #     'booking_count': booking_count,
+    #     'new_expert_count': new_expert_count,
+    #     'rebooking_count': rebooking_count,
+    #     'customer_count': customer_count,
+    #     'booking_complete': booking_complete,
+    #     'total_hod_share': total_hod_share,
+    #     'booking': booking,
+    #     'fedback': fedback,
+    #     'average_daily_count': average_daily_count,
+    #     'total_gross_amount': total_gross_amount,
+    # })
 
 
 def admin_profile(request):
