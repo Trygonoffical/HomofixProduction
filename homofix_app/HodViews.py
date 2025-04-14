@@ -185,15 +185,19 @@ def admin_dashboard(request):
     booking_new_qs = Booking.objects.filter(status="New")
     booking_completed_qs = Booking.objects.filter(status="Completed")
 
-    completed_bookings = Booking.objects.filter(status='Completed') \
-    .prefetch_related(
-        Prefetch('booking_product__addon_set', queryset=Addon.objects.select_related('spare_parts_id')),
-        'booking_product',
-    ).select_related('coupon')
-    total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
+    # completed_bookings = Booking.objects.filter(status='Completed') \
+    # .prefetch_related(
+    #     Prefetch('booking_product__addon_set', queryset=Addon.objects.select_related('spare_parts_id')),
+    #     'booking_product',
+    # ).select_related('coupon')
+    # total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
     
+    total_gross_amount = Booking.objects.filter(status='Completed').aggregate(
+        total=Sum('final_amount_field')
+    )['total'] or 0
+    print(total_gross_amount)
 
-    
+    print("gross amountt",total_gross_amount)
 
     context = {
         'booking': booking_new_qs.order_by('-id')[:10],

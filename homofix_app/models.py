@@ -417,6 +417,7 @@ class Booking(models.Model):
     area = models.CharField(max_length=1000, null=True)
     zipcode = models.CharField(max_length=100, null=True)
     cancel_reason = models.CharField(max_length=300,null=True,blank=True)
+    final_amount_field = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     
     
     
@@ -433,6 +434,7 @@ class Booking(models.Model):
                 last_id = 0
             new_id = last_id + 1
             self.order_id = f'{year_month}{new_id:04}'
+        self.final_amount_field = self.final_amount  # ✅ save calculated value
         super().save(*args, **kwargs)
     @property
     def total_amount(self):
