@@ -434,7 +434,7 @@ class Booking(models.Model):
                 last_id = 0
             new_id = last_id + 1
             self.order_id = f'{year_month}{new_id:04}'
-        self.final_amount_field = self.final_amount  # ✅ save calculated value
+          # ✅ save calculated value
         super().save(*args, **kwargs)
     @property
     def total_amount(self):
