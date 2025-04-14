@@ -139,8 +139,8 @@ from django.utils.timezone import make_aware
 #     customer_count = Customer.objects.all().count()
 #     total_hod_share = Share.objects.aggregate(Sum('company_share'))['company_share__sum'] or 0
 
-#     completed_bookings = Booking.objects.filter(status='Completed')
-#     total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
+    # completed_bookings = Booking.objects.filter(status='Completed')
+    # total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
     
 
 #     # Render template with additional data for average count
@@ -158,6 +158,8 @@ from django.utils.timezone import make_aware
 #     })
 
 
+
+from django.db.models import Prefetch
 
 def admin_dashboard(request):
     today = datetime.today()
@@ -182,6 +184,13 @@ def admin_dashboard(request):
     # Dashboard metrics
     booking_new_qs = Booking.objects.filter(status="New")
     booking_completed_qs = Booking.objects.filter(status="Completed")
+
+    completed_bookings = Booking.objects.filter(status='Completed') \
+    .prefetch_related(
+        Prefetch('booking_product__addon_set', queryset=Addon.objects.select_related('spare_parts_id')),
+        'booking_product',
+    ).select_related('coupon')
+    total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
     
 
     
@@ -195,6 +204,7 @@ def admin_dashboard(request):
         'customer_count': Customer.objects.count(),
         'total_hod_share': Share.objects.aggregate(total=Sum('company_share'))['total'] or 0,
         'average_daily_count': average_daily_count,
+        'total_gross_amount': total_gross_amount,
         
         
     }
