@@ -408,7 +408,7 @@
                <input type="text" id="search-input" class="form-control" placeholder="Search...">
              </div>
             <ul class="list-group list-group-flush review-list">
-               {% for i in fedback %}
+               {% for i in page_obj  %}
                <li class="list-group-item bg-transparent">
                   <div class="d-flex align-items-center">
                      {% if i.technician_id.profile_pic and i.technician_id.profile_pic.url %}
@@ -445,6 +445,8 @@
                      <i class='bx bxs-star text-white'></i>
 
                      {% endif %}
+
+                     
                      
                       {% comment %} <i class='bx bxs-star text-white'></i>
                       <i class='bx bxs-star text-white'></i>
@@ -454,10 +456,42 @@
                     </div>
                   </div>
                </li>
+               
                {% endfor %}
+               
               
              
             </ul>
+            <div class="pagination mt-3 d-flex justify-content-center">
+               <nav>
+                 <ul class="pagination pagination-sm">
+                   {% if page_obj.has_previous %}
+                     <li class="page-item">
+                       <a class="page-link" href="?page=1">First</a>
+                     </li>
+                     <li class="page-item">
+                       <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                     </li>
+                   {% endif %}
+             
+                   <li class="page-item disabled">
+                     <span class="page-link">
+                       Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                     </span>
+                   </li>
+             
+                   {% if page_obj.has_next %}
+                     <li class="page-item">
+                       <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                     </li>
+                     <li class="page-item">
+                       <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                     </li>
+                   {% endif %}
+                 </ul>
+               </nav>
+             </div>
+             
          </div>
       </div>
    </div> 

@@ -159,7 +159,7 @@ from django.utils.timezone import make_aware
 
 
 
-from django.db.models import Prefetch
+
 
 def admin_dashboard(request):
     today = datetime.today()
@@ -185,20 +185,19 @@ def admin_dashboard(request):
     booking_new_qs = Booking.objects.filter(status="New")
     booking_completed_qs = Booking.objects.filter(status="Completed")
 
-    # completed_bookings = Booking.objects.filter(status='Completed') \
-    # .prefetch_related(
-    #     Prefetch('booking_product__addon_set', queryset=Addon.objects.select_related('spare_parts_id')),
-    #     'booking_product',
-    # ).select_related('coupon')
-    # total_gross_amount = sum(booking.final_amount for booking in completed_bookings)
+    
     
     total_gross_amount = Booking.objects.filter(status='Completed').aggregate(
         total=Sum('final_amount_field')
     )['total'] or 0
-    print(total_gross_amount)
 
-    print("gross amountt",total_gross_amount)
+    # fedback = feedback.objects.all()
+    feedback_list = feedback.objects.all().order_by('-id')  # latest first
+    paginator = Paginator(feedback_list, 10)  # 10 feedback per page
 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         'booking': booking_new_qs.order_by('-id')[:10],
         'booking_count': booking_new_qs.count(),
@@ -209,6 +208,7 @@ def admin_dashboard(request):
         'total_hod_share': Share.objects.aggregate(total=Sum('company_share'))['total'] or 0,
         'average_daily_count': average_daily_count,
         'total_gross_amount': total_gross_amount,
+        'page_obj': page_obj
         
         
     }
